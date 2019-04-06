@@ -2,6 +2,7 @@ import React from "react";
 import ProgressDot from "../../components/ProgressDot";
 import putPlayList from "../../containers/fetchData";
 import "./index.scss";
+import AudioVisualizer from "../../components/AudioVisualizer";
 
 const tempArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
@@ -54,6 +55,7 @@ class GameField extends React.Component {
         <div className="container">
           <div className="row center-xs">
             <div className="col-xs">
+              <AudioVisualizer/>
               <p>Time</p>
             </div>
           </div>
