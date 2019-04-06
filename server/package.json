@@ -27,7 +27,6 @@
     "@nestjs/platform-express": "^6.0.0",
     "@nestjs/platform-socket.io": "latest",
     "axios": "^0.18.0",
-    "playmusic": "^2.3.0",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",

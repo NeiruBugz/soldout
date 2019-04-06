@@ -4,22 +4,23 @@ import {
   WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Client, Server } from 'socket.io';
 
-@WebSocketGateway(8080)
+@WebSocketGateway()
 export class WsGateway {
   @WebSocketServer()
   server: Server;
 
   @SubscribeMessage('events')
-  findAll(client: Client, data: any): Observable<WsResponse<number>> {
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
-  }
-
-  @SubscribeMessage('identity')
-  async identity(client: Client, data: number): Promise<number> {
-    return data;
+  test(client: Client, data: any): WsResponse<object[]> {
+    client.send({
+      event: 'tracks',
+      data: [],
+    });
+    console.log(client, data);
+    return {
+      event: 'tracks',
+      data: [],
+    };
   }
 }

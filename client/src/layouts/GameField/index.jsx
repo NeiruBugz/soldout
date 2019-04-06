@@ -8,14 +8,14 @@ const tempArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1
 const ProgressBar = ({ arr }) => (
   <div className="progress-bar">
     {arr.map(item => (
-      <ProgressDot key={item}/>
+      <ProgressDot key={item} />
     ))}
   </div>
 );
 
 class GameField extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.props = props;
     this.state = {
@@ -47,7 +47,7 @@ class GameField extends React.Component {
   //   this.setState({ tracks: showedTracks });
   // };
 
-  render () {
+  render() {
     // const { tracks } = this.state;
     return (
       <div>
