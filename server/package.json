@@ -11,13 +11,15 @@
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && npm run build",
-    "start:prod": "node dist/main.js",
+    "start:prod": "forever start --minUptime 1000 --spinSleepTime 1000 -l api.log -a dist/main.js",
+    "stop": "forever stop dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "deploy": "scp -r src root@dergunov.net:/var/www/gts.dergunov.net/server/; scp * root@dergunov.net:/var/www/gts.dergunov.net/server/"
   },
   "dependencies": {
     "@nestjs/common": "^6.0.0",
@@ -43,7 +45,8 @@
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.7.0",
     "tslint": "5.12.1",
-    "typescript": "^3.2.4"
+    "typescript": "^3.2.4",
+    "forever": "^0.15.3"
   },
   "jest": {
     "moduleFileExtensions": [
