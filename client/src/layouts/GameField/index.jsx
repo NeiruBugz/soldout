@@ -1,8 +1,11 @@
 import React from "react";
-import Button from "../../components/Button/Button";
+import io from "socket.io-client";
+
 import ProgressDot from "../../components/ProgressDot";
 import "./index.scss";
-import fetchPlaylist from "../../containers/fetchData";
+
+const socket = io("http://192.168.43.133:8080");
+console.log(socket);
 
 const tempArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
@@ -19,19 +22,37 @@ class GameField extends React.Component {
   constructor (props) {
     super(props);
     this.props = props;
+    this.state = {
+      tracks: [],
+    };
+    // connect();
   }
 
   componentDidMount () {
-    this.prepareData();
+    // this.prepareData();
   };
 
-  prepareData = async () => {
-    const response = await fetchPlaylist();
-    const { tracks } = response;
-    console.log(tracks);
+  getRandomTracks = (min, max) => {
+    return Math.ceil(Math.random() * (max - min) + min);
   };
+
+  // prepareData = async () => {
+  //   const showedTracks = [];
+  //   const response = await fetchPlaylist();
+  //   const { tracks } = response;
+  //   let resultTracks = tracks.sort(() => Math.random() - 0.5);
+  //   resultTracks = resultTracks.slice(0, 20);
+  //   for (let i = 0; i < 3; i++) {
+  //     showedTracks.push(resultTracks[this.getRandomTracks(0, 20)]);
+  //   }
+  //   const rightTrack = resultTracks[this.getRandomTracks(0, 20)];
+  //   showedTracks.push(rightTrack);
+  //   console.table(showedTracks);
+  //   this.setState({ tracks: showedTracks });
+  // };
 
   render () {
+    // const { tracks } = this.state;
     return (
       <div>
         <div className="container">
@@ -40,20 +61,14 @@ class GameField extends React.Component {
               <p>Time</p>
             </div>
           </div>
-          <div className="row ">
-            <div className="col-xs-offset-2 col-xs-4">
-              <Button artist="ЛСП" track="Холостяк" skin="bright"/>
-            </div>
-            <div className="col-xs-4">
-              <Button artist="Скриптонит" track="Притон" skin="bright"/>
-            </div>
-            <div className="col-xs-offset-2 col-xs-4">
-              <Button artist="Макс Корж" track="Пролетарка" skin="bright"/>
-            </div>
-            <div className="col-xs-4">
-              <Button artist="Darude" track="Sandstorm" skin="bright"/>
-            </div>
-          </div>
+
+          {/*<div className="row ">*/}
+          {/*  {tracks.map(item => (*/}
+          {/*    <div key={item.src} className="col-xs-6">*/}
+          {/*      <Button artist={item.artist.name} track={item.name} skin="bright"/>*/}
+          {/*    </div>*/}
+          {/*  ))}*/}
+          {/*</div>*/}
           <ProgressBar arr={tempArr}/>
         </div>
       </div>
