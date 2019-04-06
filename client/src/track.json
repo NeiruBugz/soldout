@@ -1,0 +1,7 @@
+{
+  "artist": "string",
+  "album": "string",
+  "track": "string",
+  "albumArt": "url",
+  "sound": "url"
+}
