@@ -15,7 +15,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "deploy": "scp -r build/* root@dergunov.net:/var/www/gts.dergunov.net/client/"
   },
   "browserslist": [
     ">0.2%",

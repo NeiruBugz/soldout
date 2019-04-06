@@ -1,22 +1,27 @@
 import React from "react";
-import logo from "./logo.svg";
+import vinyl from "./vinyl.svg";
 import "./App.scss";
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit
-        {" "}
-        <code>src/App.js</code>
-        {" "}
-        and save to reload.
-      </p>
-      <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-        Learn React
-      </a>
-    </header>
+  <div className="hero-section">
+    <div className="container">
+      <div className="row">
+        <div className="col-xs">
+          <h2>Узнать за 10 секунд</h2>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-xs-10">
+          <p>
+            Простая игра, вдохновленная “Афиша.Видео”. Теперь поиграть могут
+            не только рэперы, но и ты
+          </p>
+        </div>
+      </div>
+    </div>
+    <div className="vinyl-container">
+      <img src={vinyl} alt="Vinyl"/>
+    </div>
   </div>
 );
 
