@@ -7,14 +7,11 @@ const b = block("progress-dot");
 class ProgressDot extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      filled: null,
-    };
   }
 
   render () {
     return (
-      <span className={b()}>&nbsp;</span>
+      <span className={b({ color: this.props.color })}>&nbsp;</span>
     );
   }
 }
