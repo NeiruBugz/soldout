@@ -5,6 +5,7 @@ const Game = require('./game');
 
 const game = new Game();
 io.on('connection', socket => {
+  console.log(socket.nsp);
   let tracks = [];
   let rightTrackId;
 
@@ -27,12 +28,12 @@ io.on('connection', socket => {
     tracks = await game.getTracksByPlaylistId(msg.playlistId);
     tracks = tracks.tracks;
 
-    io.emit('tracks', getNextTrackPull());
+    socket.emit('tracks', getNextTrackPull());
   });
 
   socket.on('choose', async msg => {
-    io.emit('guess', rightTrackId === msg.trackId);
-    io.emit('tracks', getNextTrackPull());
+    socket.emit('guess', rightTrackId === msg.trackId);
+    socket.emit('tracks', getNextTrackPull());
   });
 });
 
