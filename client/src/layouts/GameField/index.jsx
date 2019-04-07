@@ -1,75 +1,98 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import io from "socket.io-client";
+
 import ProgressDot from "../../components/ProgressDot";
-import putPlayList from "../../containers/fetchData";
+import AudioVisualizer from "../../components/AudioVisualizer";
+import Button from "../../components/Button/Button";
+import { setTracks } from "../../store/actions/tracks";
+import { setDot } from "../../store/actions/progress";
+
 import "./index.scss";
 
-const tempArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+let ProgressBar = ({ dots }) => {
+  const myDots = [...dots.dots];
+  console.log(dots, myDots);
+  return (
+    <div className="progress-bar">
+      {myDots.map(item => (
+        <ProgressDot
+          key={item}
+          // eslint-disable-next-line no-nested-ternary
+          color={item !== null ? (item ? "green" : "red") : "black"}
+        />
+      ))}
+    </div>
+  );
+};
 
-const ProgressBar = ({ arr }) => (
-  <div className="progress-bar">
-    {arr.map(item => (
-      <ProgressDot key={item} />
-    ))}
-  </div>
-);
+ProgressBar = connect(state => ({
+  dots: state.progressBar,
+}))(ProgressBar);
 
 class GameField extends React.Component {
-
   constructor(props) {
     super(props);
-    this.props = props;
-    this.state = {
-      tracks: [],
-    };
+    console.log(props);
+    this.socket = io("ws://gts.dergunov.net:3000", {
+      transports: ["websocket"],
+    });
   }
 
-  componentDidMount () {
-    // this.prepareData();
-    putPlayList();
+  componentDidMount() {
+    this.putPlayList();
+  }
+
+  putPlayList = () => {
+    const playlistId = "5734677122";
+    this.socket.emit("start", { playlistId });
+    this.socket.on("tracks", message => {
+      this.props.setTracks(message);
+    });
+    this.socket.on("guess", message => {
+      this.props.setDot(message);
+    });
   };
 
-  getRandomTracks = (min, max) => {
-    return Math.ceil(Math.random() * (max - min) + min);
+  onChoose = trackId => {
+    this.socket.emit("choose", { trackId });
   };
-
-  // prepareData = async () => {
-  //   const showedTracks = [];
-  //   const response = await fetchPlaylist();
-  //   const { tracks } = response;
-  //   let resultTracks = tracks.sort(() => Math.random() - 0.5);
-  //   resultTracks = resultTracks.slice(0, 20);
-  //   for (let i = 0; i < 3; i++) {
-  //     showedTracks.push(resultTracks[this.getRandomTracks(0, 20)]);
-  //   }
-  //   const rightTrack = resultTracks[this.getRandomTracks(0, 20)];
-  //   showedTracks.push(rightTrack);
-  //   console.table(showedTracks);
-  //   this.setState({ tracks: showedTracks });
-  // };
 
   render() {
-    // const { tracks } = this.state;
+    const { tracks } = this.props.tracks;
     return (
-      <div>
+      <div className="field">
         <div className="container">
           <div className="row center-xs">
             <div className="col-xs">
-              <p>Time</p>
+              <AudioVisualizer musicUrl={tracks.src} />
             </div>
           </div>
 
-          {/*<div className="row ">*/}
-          {/*  {tracks.map(item => (*/}
-          {/*    <div key={item.src} className="col-xs-6">*/}
-          {/*      <Button artist={item.artist.name} track={item.name} skin="bright"/>*/}
-          {/*    </div>*/}
-          {/*  ))}*/}
-          {/*</div>*/}
-          <ProgressBar arr={tempArr}/>
+          <div className="row ">
+            {tracks.tracks.map(item => (
+              <div key={item.id} className="col-xs-6">
+                <Button
+                  artist={item.artist}
+                  track={item.name}
+                  skin="bright"
+                  onClick={() => this.onChoose(item.id)}
+                />
+              </div>
+            ))}
+          </div>
+          <ProgressBar />
         </div>
       </div>
     );
   }
 }
 
-export default GameField;
+export default connect(
+  state => ({ tracks: state.tracks }),
+  dispatch => ({
+    setTracks: bindActionCreators(setTracks, dispatch),
+    setDot: bindActionCreators(setDot, dispatch),
+  })
+)(GameField);

@@ -1,16 +1,46 @@
 .landing {
   width: 100%;
-  height: 100vh;
   margin-top: 30vh;
+
+  @media (max-width: 1024px) {
+    margin-top: 20vh;
+  }
+}
+
+.wrapper {
+  display: flex;
+}
+
+.vinyl__image {
+  animation: App-logo-spin infinite 20s linear;
 }
 
 .heading {
   font-family: 'Rubik', sans-serif;
   font-weight: 900;
   font-size: 48px;
+  color: #fdfdfd;
+
+  @media (max-width: 425px) {
+    font-size: 24px;
+  }
 }
 
 .para {
   font-family: 'Montserrat', sans-serif;
   font-size: 20px;
+  color: #fdfdfd;
+
+  @media (max-width: 425px) {
+    font-size: 16px;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
