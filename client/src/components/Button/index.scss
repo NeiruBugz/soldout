@@ -13,4 +13,10 @@
   background-color: #59abe3;
   color: #fdfdfd;
   cursor: pointer;
+
+  @media (max-width: 425px) {
+    margin-top: 84px;
+    height: 60px;
+    font-size: 24px;
+  }
 }

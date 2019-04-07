@@ -11,9 +11,11 @@ class Button extends React.Component {
     return (
       <button className={b({ theme })} type="submit">
         <p className={b("artist")}>{artist}</p>
-        <p className={b("track")}>
-          {track}
-        </p>
+        {track
+          ? <p className={b("track")}>
+            {track}
+          </p>
+          : null}
       </button>
     );
   }
