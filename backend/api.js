@@ -51,5 +51,5 @@ module.exports = class Api {
       src: res.data.preview,
     }));
   }
+};
 
-}

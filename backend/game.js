@@ -7,5 +7,4 @@ module.exports = class Game {
       return await this.api.getPlaylist(playlistId);
     }
   }
-}
-
+};

@@ -16,7 +16,7 @@ io.on('connection', socket => {
     returnObject.src = tracks[randomTrackIndex].src;
     rightTrackId = tracks[randomTrackIndex].id;
     for (let i = 0; i < 4; i++) {
-      const track = tracks.pop();
+      const track = tracks.shift();
       returnObject.tracks.push({ id: track.id, name: track.name, artist: track.artist.name });
     }
 
@@ -32,7 +32,6 @@ io.on('connection', socket => {
 
   socket.on('choose', async msg => {
     io.emit('guess', rightTrackId === msg.trackId);
-    tracks = await game.getTracksByPlaylistId(msg.playlistId).tracks;
     io.emit('tracks', getNextTrackPull());
   });
 });
