@@ -51,7 +51,7 @@ class GameField extends React.Component {
   render () {
     // const { tracks } = this.state;
     return (
-      <div>
+      <div className="field">
         <div className="container">
           <div className="row center-xs">
             <div className="col-xs">

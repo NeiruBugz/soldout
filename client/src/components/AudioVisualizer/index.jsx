@@ -31,9 +31,10 @@ export default class AudioVisualizer extends React.Component {
       analyser.getByteFrequencyData(freqData);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const gradient = ctx.createLinearGradient(20, 0, 220, 0);
-      gradient.addColorStop(0, "green");
-      gradient.addColorStop(.5, "cyan");
-      gradient.addColorStop(1, "green");
+      gradient.addColorStop(1, "#00f"); // black
+      gradient.addColorStop(0.75, "#f00"); // red
+      gradient.addColorStop(0.25, "#f00"); // yellow
+      gradient.addColorStop(0, "#ffff00"); // white
       ctx.fillStyle = gradient;
       const bars = 80;
       for (let i = 0; i < bars; i++) {
