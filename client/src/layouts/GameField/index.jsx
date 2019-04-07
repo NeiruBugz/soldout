@@ -1,4 +1,5 @@
 import React from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import io from "socket.io-client";
 
@@ -6,19 +7,27 @@ import ProgressDot from "../../components/ProgressDot";
 import AudioVisualizer from "../../components/AudioVisualizer";
 import Button from "../../components/Button/Button";
 import { setTracks } from "../../store/actions/tracks";
+import { setDot } from "../../store/actions/progress";
 
 import "./index.scss";
-import { bindActionCreators } from "redux";
 
 const tempArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
-const ProgressBar = ({ arr }) => (
-  <div className="progress-bar">
-    {arr.map(item => (
-      <ProgressDot key={item} />
-    ))}
-  </div>
-);
+let ProgressBar = ({ dots }) => {
+  const myDots = [...dots.dots];
+  console.log(dots, myDots);
+  return (
+    <div className="progress-bar">
+      {myDots.map(item => (
+        // eslint-disable-next-line no-nested-ternary
+        <ProgressDot key={item} color={item !== null ? (item ? "green" : "red") : "black"} />
+      ))}
+    </div>);
+};
+
+ProgressBar = connect(state => ({
+  dots: state.progressBar,
+}))(ProgressBar);
 
 class GameField extends React.Component {
 
@@ -39,8 +48,12 @@ class GameField extends React.Component {
       this.props.setTracks(message);
     });
     this.socket.on("guess", message => {
-      console.log("guess", message);
+      this.props.setDot(message);
     });
+  };
+
+  onChoose = (trackId) => {
+    this.socket.emit("choose", { trackId });
   };
 
   render () {
@@ -56,12 +69,17 @@ class GameField extends React.Component {
 
           <div className="row ">
             {tracks.tracks.map(item => (
-              <div key={item.src} className="col-xs-6">
-                <Button artist={item.artist} track={item.name} skin="bright" />
+              <div key={item.id} className="col-xs-6">
+                <Button
+                  artist={item.artist}
+                  track={item.name}
+                  skin="bright"
+                  onClick={() => this.onChoose(item.id)}
+                />
               </div>
             ))}
           </div>
-          <ProgressBar arr={tempArr} />
+          <ProgressBar />
         </div>
       </div>
     );
@@ -71,4 +89,7 @@ class GameField extends React.Component {
 export default connect(state =>
     ({ tracks: state.tracks }),
   dispatch =>
-    ({ setTracks: bindActionCreators(setTracks, dispatch) }))(GameField);
+    ({
+      setTracks: bindActionCreators(setTracks, dispatch),
+      setDot: bindActionCreators(setDot, dispatch),
+    }))(GameField);

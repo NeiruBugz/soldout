@@ -9,7 +9,7 @@ class Button extends React.Component {
     const { track, artist, theme } = this.props;
 
     return (
-      <button className={b({ theme })} type="submit">
+      <button className={b({ theme })} onClick={this.props.onClick}>
         <p className={b("artist")}>{artist}</p>
         {track
           ? <p className={b("track")}>

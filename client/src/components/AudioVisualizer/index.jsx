@@ -1,8 +1,6 @@
 /* eslint-disable react/no-string-refs */
 import React from "react";
 
-const musicUrl = `http://cdn-preview-1.deezer.com/stream/c-1fd3a7b13a90a5301ced29f8603d21c1-5.mp3`;
-
 export default class AudioVisualizer extends React.Component {
   constructor (props) {
     super(props);
@@ -55,17 +53,16 @@ export default class AudioVisualizer extends React.Component {
           <audio
             ref="audio"
             autoPlay
-            loop
-            src={musicUrl}
+            src={this.props.musicUrl}
           />
         </div>
         <canvas
           ref="analyzerCanvas"
           id="analyzer"
         />
-        <button onClick={this.context && this.context.play()}>
-          Play
-        </button>
+        {/*<button onClick={this.context && this.context.play()}>*/}
+        {/*  Play*/}
+        {/*</button>*/}
       </div>
     );
   }
