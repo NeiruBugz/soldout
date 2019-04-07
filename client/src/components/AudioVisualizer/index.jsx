@@ -14,16 +14,16 @@ export default class AudioVisualizer extends React.Component {
   }
 
   createVisualization () {
-    const context = new AudioContext();
-    const analyser = context.createAnalyser();
+    this.context = new AudioContext();
+    const analyser = this.context.createAnalyser();
     const canvas = this.refs.analyzerCanvas;
     const ctx = canvas.getContext("2d");
     const { audio } = this.refs;
     audio.crossOrigin = "anonymous";
-    const audioSrc = context.createMediaElementSource(audio);
+    const audioSrc = this.context.createMediaElementSource(audio);
     audioSrc.connect(analyser);
-    audioSrc.connect(context.destination);
-    analyser.connect(context.destination);
+    audioSrc.connect(this.context.destination);
+    analyser.connect(this.context.destination);
 
     function renderFrame () {
       const freqData = new Uint8Array(analyser.frequencyBinCount);
@@ -63,6 +63,9 @@ export default class AudioVisualizer extends React.Component {
           ref="analyzerCanvas"
           id="analyzer"
         />
+        <button onClick={this.context && this.context.play()}>
+          Play
+        </button>
       </div>
     );
   }
