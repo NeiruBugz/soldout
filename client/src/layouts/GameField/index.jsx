@@ -1,8 +1,10 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-array-index-key */
 import React from "react";
+import { withRouter } from "react-router";
+import io from "socket.io-client";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import io from "socket.io-client";
 
 import { setTracks } from "../../store/actions/tracks";
 import { setDot } from "../../store/actions/progress";
@@ -13,8 +15,11 @@ import Button from "../../components/Button/Button";
 
 import "./index.scss";
 
-let ProgressBar = ({ dots }) => {
+let ProgressBar = ({ dots, history }) => {
   const myDots = [...dots.dots];
+  if (myDots.length === 20) {
+    history.push("/");
+  }
   while (myDots.length < 20) {
     myDots.push(null);
   }
@@ -24,7 +29,6 @@ let ProgressBar = ({ dots }) => {
       {myDots.map((item, index) => (
         <ProgressDot
           key={index}
-          // eslint-disable-next-line no-nested-ternary
           color={item !== null ? (item ? "green" : "red") : "black"}
         />
       ))}
@@ -32,21 +36,27 @@ let ProgressBar = ({ dots }) => {
   );
 };
 
-ProgressBar = connect(state => ({
-  dots: state.progressBar,
-}))(ProgressBar);
+ProgressBar = withRouter(
+  connect(state => ({
+    dots: state.progressBar,
+  }))(ProgressBar)
+);
 
 class GameField extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.socket = io("ws://gts.dergunov.net:3000", {
       transports: ["websocket"],
     });
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.putPlayList();
   }
+
+  // UNSAFE_componentWillReceiveProps() {
+  //   this.setState({ disabledButton: false });
+  // }
 
   putPlayList = () => {
     const playlistId = "248297032";
@@ -69,19 +79,20 @@ class GameField extends React.Component {
     this.socket.emit("choose", { trackId });
   };
 
-  render () {
+  render() {
     const { tracks } = this.props.tracks;
     return (
       <div className="field">
         <div className="container">
           <div className="row center-xs">
             <div className="col-xs">
-              <AudioVisualizer musicUrl={tracks.src}/>
+              <AudioVisualizer musicUrl={tracks.src} />
             </div>
           </div>
           <div className="button--grid">
             {tracks.tracks.map(item => (
               <Button
+                key={item.id}
                 id={`track_${item.id}`}
                 artist={item.artist}
                 track={item.name}
@@ -90,7 +101,7 @@ class GameField extends React.Component {
               />
             ))}
           </div>
-          <ProgressBar/>
+          <ProgressBar />
         </div>
       </div>
     );
@@ -102,5 +113,5 @@ export default connect(
   dispatch => ({
     setTracks: bindActionCreators(setTracks, dispatch),
     setDot: bindActionCreators(setDot, dispatch),
-  }),
+  })
 )(GameField);
