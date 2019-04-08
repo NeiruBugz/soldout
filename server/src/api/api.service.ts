@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { Injectable } from '@nestjs/common';
 
-const API_URL = 'https://api.deezer.com';
-
 @Injectable()
 export class ApiService {
-  getChart(): Promise<any> {
-    return axios.get(`${API_URL}/chart`).then(res => ({
+  private API_URL = 'https://api.deezer.com';
+
+  public getChart(): Promise<any> {
+    return axios.get(`${this.API_URL}/chart`).then(res => ({
       albums: res.data.albums.data.map(album => ({
         id: album.id,
         name: album.name,
@@ -28,9 +28,9 @@ export class ApiService {
     }));
   }
 
-  getPlaylist(id: number = 5734677122) {
-    return axios.get(`${API_URL}/playlist/${id}`).then(res => ({
-      tracks: res.data.tracks.data.map(track => ({
+  public getPlaylistById(id: number = 5734677122) {
+    return axios.get(`${this.API_URL}/playlist/${id}`).then(res =>
+      res.data.tracks.data.map(track => ({
         id: track.id,
         name: track.title,
         artist: {
@@ -39,19 +39,6 @@ export class ApiService {
         },
         src: track.preview,
       })),
-    }));
+    );
   }
-
-  getTrack(id: number) {
-    return axios.get(`${API_URL}/track/${id}`).then(res => ({
-      id: res.data.id,
-      name: res.data.title,
-      artist: {
-        id: res.data.artist.id,
-        name: res.data.artist.name,
-      },
-      src: res.data.preview,
-    }));
-  }
-
 }
