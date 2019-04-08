@@ -4,21 +4,11 @@ import "./index.scss";
 
 const b = block("button");
 
-class Button extends React.Component {
-  render () {
-    const { track, artist, theme } = this.props;
-
-    return (
-      <button className={b({ theme })} onClick={this.props.onClick}>
-        <p className={b("artist")}>{artist}</p>
-        {track
-          ? <p className={b("track")}>
-            {track}
-          </p>
-          : null}
-      </button>
-    );
-  }
-}
+const Button = ({ track, artist, theme, ...rest }) => (
+  <button className={b({ theme })} {...rest} type="button">
+    <p className={b("artist")}>{artist}</p>
+    {track ? <p className={b("track")}>{track}</p> : null}
+  </button>
+);
 
 export default Button;

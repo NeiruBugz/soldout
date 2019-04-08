@@ -11,8 +11,17 @@
   display: flex;
 }
 
+.vinyl {
+  position: absolute;
+  right: 20px;
+  @media (max-width: 1024px) {
+    right: -180px;
+  }
+}
+
 .vinyl__image {
   animation: App-logo-spin infinite 20s linear;
+
 }
 
 .heading {
@@ -21,7 +30,7 @@
   font-size: 48px;
   color: #fdfdfd;
 
-  @media (max-width: 425px) {
+  @media (max-width: 1024px) {
     font-size: 24px;
   }
 }
@@ -31,7 +40,7 @@
   font-size: 20px;
   color: #fdfdfd;
 
-  @media (max-width: 425px) {
+  @media (max-width: 1024px) {
     font-size: 16px;
   }
 }

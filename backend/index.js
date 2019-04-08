@@ -5,14 +5,17 @@ const Game = require('./game');
 
 const game = new Game();
 io.on('connection', socket => {
-  console.log(socket.nsp);
   let tracks = [];
   let rightTrackId;
+  let playlistId = null;
 
-  const getNextTrackPull = () => {
+  const getNextTrackPull = async () => {
     const returnObject = { tracks: [] };
+    if (tracks.length < 4) {
+      tracks = await game.getTracksByPlaylistId(playlistId);
+      tracks = tracks.tracks;
+    }
     tracks.sort(() => Math.random() - 0.5);
-
     const randomTrackIndex = Math.floor(Math.random() * 4);
     returnObject.src = tracks[randomTrackIndex].src;
     rightTrackId = tracks[randomTrackIndex].id;
@@ -25,15 +28,18 @@ io.on('connection', socket => {
   };
 
   socket.on('start', async msg => {
-    tracks = await game.getTracksByPlaylistId(msg.playlistId);
+    playlistId = msg.playlistId;
+    tracks = await game.getTracksByPlaylistId(playlistId);
     tracks = tracks.tracks;
 
-    socket.emit('tracks', getNextTrackPull());
+    socket.emit('tracks', await getNextTrackPull());
   });
 
   socket.on('choose', async msg => {
     socket.emit('guess', rightTrackId === msg.trackId);
-    socket.emit('tracks', getNextTrackPull());
+    socket.emit('showCorrect', { choose: msg.trackId, correct: rightTrackId });
+    const tracks = await getNextTrackPull();
+    setTimeout(() => socket.emit('tracks', tracks), 1500);
   });
 });
 

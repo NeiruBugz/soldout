@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -13,12 +14,15 @@ import "./index.scss";
 
 let ProgressBar = ({ dots }) => {
   const myDots = [...dots.dots];
-  console.log(dots, myDots);
+  while(myDots.length < 20) {
+    myDots.push(null);
+  }
+
   return (
     <div className="progress-bar">
-      {myDots.map(item => (
+      {myDots.map((item, index)=> (
         <ProgressDot
-          key={item}
+          key={index}
           // eslint-disable-next-line no-nested-ternary
           color={item !== null ? (item ? "green" : "red") : "black"}
         />
@@ -34,7 +38,6 @@ ProgressBar = connect(state => ({
 class GameField extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.socket = io("ws://gts.dergunov.net:3000", {
       transports: ["websocket"],
     });
@@ -45,10 +48,14 @@ class GameField extends React.Component {
   }
 
   putPlayList = () => {
-    const playlistId = "5734677122";
+    const playlistId = "5590202882";
     this.socket.emit("start", { playlistId });
     this.socket.on("tracks", message => {
       this.props.setTracks(message);
+    });
+    this.socket.on("showCorrect", message => {
+      document.getElementById(`track_${message.choose}`).classList.add('error');
+      document.getElementById(`track_${message.correct}`).classList.add('correct');
     });
     this.socket.on("guess", message => {
       this.props.setDot(message);
@@ -74,6 +81,7 @@ class GameField extends React.Component {
             {tracks.tracks.map(item => (
               <div key={item.id} className="col-xs-6">
                 <Button
+                  id={`track_${item.id}`}
                   artist={item.artist}
                   track={item.name}
                   skin="bright"

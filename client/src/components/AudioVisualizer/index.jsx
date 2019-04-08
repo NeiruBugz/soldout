@@ -60,9 +60,6 @@ export default class AudioVisualizer extends React.Component {
           ref="analyzerCanvas"
           id="analyzer"
         />
-        {/*<button onClick={this.context && this.context.play()}>*/}
-        {/*  Play*/}
-        {/*</button>*/}
       </div>
     );
   }
