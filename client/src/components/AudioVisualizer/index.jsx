@@ -12,6 +12,7 @@ export default class AudioVisualizer extends React.Component {
   }
 
   createVisualization () {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
     const analyser = this.context.createAnalyser();
     const canvas = this.refs.analyzerCanvas;
