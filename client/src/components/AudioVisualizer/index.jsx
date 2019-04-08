@@ -1,4 +1,4 @@
-/* eslint-disable react/no-string-refs */
+/* eslint-disable react/no-string-refs,react/destructuring-assignment */
 import React from "react";
 
 export default class AudioVisualizer extends React.Component {
@@ -12,6 +12,7 @@ export default class AudioVisualizer extends React.Component {
   }
 
   createVisualization () {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
     const analyser = this.context.createAnalyser();
     const canvas = this.refs.analyzerCanvas;

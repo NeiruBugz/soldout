@@ -12,7 +12,8 @@
 /build
 
 # misc
-.idea/
+/.storybook
+/.idea
 .vscode
 .DS_Store
 .env.local

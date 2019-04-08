@@ -23,7 +23,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
-    "deploy": "scp -r build/* root@dergunov.net:/var/www/gts.dergunov.net/client/"
+    "deploy": "scp -r build/* root@dergunov.net:/var/www/gts.dergunov.net/client/",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": [
     ">0.2%",

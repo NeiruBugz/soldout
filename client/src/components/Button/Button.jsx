@@ -6,8 +6,8 @@ const b = block("button");
 
 const Button = ({ track, artist, theme, ...rest }) => (
   <button className={b({ theme })} {...rest} type="button">
-    <p className={b("artist")}>{artist}</p>
-    {track ? <p className={b("track")}>{track}</p> : null}
+    <span className={b("artist")}>{artist}</span>
+    {track ? <span className={b("track", { theme })}>{track}</span> : null}
   </button>
 );
 
