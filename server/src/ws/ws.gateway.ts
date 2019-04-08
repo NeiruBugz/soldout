@@ -51,22 +51,12 @@ export class WsGateway {
   }
 
   @SubscribeMessage('choose')
-  async choose(
-    client: Client,
-    data: any,
-  ): Promise<Array<WsResponse<boolean | object>>> {
+  async choose(client: Client, data: any): Promise<void> {
     const { trackId } = data;
     setTimeout(() => client.emit('tracks', tracks), 1500);
+    client.emit('showCorrect', { choose: trackId, correct: this.rightTrackId });
+    client.emit('guess', this.rightTrackId === trackId);
     const tracks = await this.getNextTrackPull();
-    return [
-      {
-        event: 'guess',
-        data: this.rightTrackId === trackId,
-      },
-      {
-        event: 'showCorrect',
-        data: { choose: trackId, correct: this.rightTrackId },
-      },
-    ];
+    return;
   }
 }
