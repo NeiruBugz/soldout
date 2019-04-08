@@ -79,18 +79,15 @@ class GameField extends React.Component {
               <AudioVisualizer musicUrl={tracks.src}/>
             </div>
           </div>
-
-          <div className="row ">
+          <div className="button--grid">
             {tracks.tracks.map(item => (
-              <div key={item.id} className="col-xs-6 col-md-6">
-                <Button
-                  id={`track_${item.id}`}
-                  artist={item.artist}
-                  track={item.name}
-                  skin="bright"
-                  onClick={() => this.onChoose(item.id)}
-                />
-              </div>
+              <Button
+                id={`track_${item.id}`}
+                artist={item.artist}
+                track={item.name}
+                skin="bright"
+                onClick={() => this.onChoose(item.id)}
+              />
             ))}
           </div>
           <ProgressBar/>

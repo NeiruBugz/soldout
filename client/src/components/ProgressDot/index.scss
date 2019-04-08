@@ -2,7 +2,7 @@
   width: 16px;
   height: 16px;
   margin: 12px;
-  background-color: #222222;
+  border: 1px solid #fdfdfd;
   border-radius: 50%;
 
   @media (max-width: 1024px) {
@@ -12,9 +12,11 @@
 }
 
 .progress-dot_color_green {
+  border: 1px solid #26C281;
   background-color: #26C281;
 }
 
 .progress-dot_color_red {
+  border: 1px solid #C91F37;
   background-color: #C91F37;
 }
