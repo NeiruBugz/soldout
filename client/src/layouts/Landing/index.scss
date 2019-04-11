@@ -25,13 +25,17 @@
 
 .vinyl__image {
   animation: App-logo-spin infinite 20s linear;
+  height: 28rem;
   @media (max-width: 425px) {
-    height: 256px;
+    height: 16rem;
+  }
+  @media (max-width: 1024px) {
+    height: 20rem;
   }
 }
 
 .heading {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-weight: 900;
   font-size: 48px;
   color: #fdfdfd;
@@ -42,7 +46,7 @@
 }
 
 .para {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   color: #fdfdfd;
 
