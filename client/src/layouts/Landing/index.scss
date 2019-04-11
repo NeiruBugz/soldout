@@ -37,21 +37,21 @@
 .heading {
   font-family: "Rubik", sans-serif;
   font-weight: 900;
-  font-size: 48px;
+  font-size: 3rem;
   color: #fdfdfd;
 
   @media (max-width: 1024px) {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 }
 
 .para {
   font-family: "Montserrat", sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #fdfdfd;
 
   @media (max-width: 1024px) {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }
 
