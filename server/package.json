@@ -12,7 +12,6 @@
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && npm run build",
     "start:prod": "node dist/main.js",
-    "stop": "forever stop dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -28,7 +27,6 @@
     "@nestjs/platform-socket.io": "latest",
     "axios": "^0.18.0",
     "reflect-metadata": "^0.1.12",
-    "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
     "@nestjs/websockets": "latest",
     "socket.io": "latest",
@@ -40,16 +38,17 @@
     "@types/jest": "^23.3.13",
     "@types/node": "^10.12.18",
     "@types/supertest": "^2.0.7",
+    "forever": "^0.15.3",
     "jest": "^23.6.0",
     "nodemon": "^1.18.9",
     "prettier": "^1.15.3",
+    "rimraf": "^2.6.3",
     "supertest": "^3.4.1",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.7.0",
     "tslint": "5.12.1",
-    "typescript": "^3.2.4",
-    "forever": "^0.15.3"
+    "typescript": "^3.2.4"
   },
   "jest": {
     "moduleFileExtensions": [

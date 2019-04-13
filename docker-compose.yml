@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGODB_DATABASE="gts"
+    ports:
+      - 27017:27017
+
+  server:
+    build: ./server
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - ./server/src:/server/src
+    command: 'npm run start:prod'
+
+  client:
+    build:
+      context: client
+    volumes:
+      - ./client/build:/client/build
+      - ./client/src:/client/src
+    command: 'npm run build'

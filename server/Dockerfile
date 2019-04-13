@@ -1,14 +1,10 @@
 FROM node:10.5
 
-WORKDIR /home
+WORKDIR /server
 
 # Bundle app source
-COPY . /home
+COPY . /server
 
-# Install app dependencies
-#RUN npm install -g nodemon
-# If you are building your code for production
-# RUN npm install --only=production
 RUN npm i -g @nestjs/cli
 RUN npm install
 
