@@ -4,17 +4,17 @@
   z-index: 1000;
   background-color: transparent;
   height: 128px;
-  border: 1px solid #59ABE3;
+  border: 1px solid #59abe3;
   border-radius: 5px;
-  transition: .4s all;
+  transition: 0.4s all;
 
   @media (max-width: 425px) {
     height: 64px;
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 
   &:hover {
-    background: #59ABE3;
+    background: #59abe3;
     opacity: 0.8;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     color: #fdfdfd;
@@ -25,17 +25,15 @@
   }
 }
 
-
 .button__artist {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
 
   @media (max-width: 425px) {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
-
 
 .button.correct {
   border-color: #26c281;
@@ -48,7 +46,7 @@
 }
 
 .button__track {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .button_theme_landing {
@@ -61,7 +59,7 @@
   @media (max-width: 425px) {
     margin-top: 84px;
     height: 60px;
-    font-size: 24px !important;
+    font-size: 1.5rem;
     width: 300px;
   }
 }

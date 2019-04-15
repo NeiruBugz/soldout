@@ -89,7 +89,7 @@ class GameField extends React.Component {
               <AudioVisualizer musicUrl={tracks.src} />
             </div>
           </div>
-          <div className="button--grid">
+          <div className="button__grid">
             {tracks.tracks.map(item => (
               <Button
                 key={item.id}

@@ -1,9 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Rubik:900&subset=cyrillic');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Rubik:900&subset=cyrillic");
+
+html {
+  font-size: 16px;
+}
 
 body {
   max-width: 100%;
   min-height: 100vh;
   background-size: 100% 100%;
-  background: linear-gradient(180deg, #B06AB3 60.94%, #4568DC 100%);
+  background: linear-gradient(180deg, #b06ab3 60%, #4568dc 100%);
   overflow-x: hidden;
 }
