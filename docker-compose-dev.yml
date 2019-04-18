@@ -5,7 +5,7 @@ services:
     image: mongo:latest
     restart: always
     environment:
-      - MONGODB_DATABASE="gts"
+      - MONGODB_DATABASE="gts-test"
     ports:
       - 27017:27017
 
@@ -14,14 +14,19 @@ services:
     ports:
       - "3000:3000"
     restart: always
+    depends_on:
+      - mongodb
     volumes:
       - ./server/src:/server/src
-    command: 'npm run start:prod'
+    command: 'npm run start'
 
   client:
     build:
       context: client
+    ports:
+      - "3001:3001"
     volumes:
-      - ./client/build:/client/build
       - ./client/src:/client/src
-    command: 'npm run build'
+    environment:
+      - PORT=3001
+    command: 'npm run start'
