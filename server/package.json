@@ -23,14 +23,16 @@
   "dependencies": {
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
+    "@nestjs/mongoose": "^6.1.2",
     "@nestjs/platform-express": "^6.0.0",
     "@nestjs/platform-socket.io": "latest",
+    "@nestjs/platform-ws": "latest",
+    "@nestjs/websockets": "latest",
     "axios": "^0.18.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3",
-    "@nestjs/websockets": "latest",
     "socket.io": "latest",
-    "@nestjs/platform-ws": "latest"
+    "mongoose": "latest"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",
