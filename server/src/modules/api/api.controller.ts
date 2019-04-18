@@ -1,6 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiService } from './api.service';
-import { Param } from '@nestjs/common/decorators/http/route-params.decorator';
 
 @Controller('api')
 export class ApiController {

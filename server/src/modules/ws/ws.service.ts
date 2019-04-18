@@ -1,23 +1,21 @@
-import {
-  SubscribeMessage,
-  WebSocketGateway,
-  WebSocketServer,
-  WsResponse,
-} from '@nestjs/websockets';
-import { Client, Server } from 'socket.io';
+import { Injectable } from '@nestjs/common';
+import { WsResponse } from '@nestjs/websockets';
+import { Client } from 'socket.io';
+
 import { ApiService } from '../api/api.service';
+import { TrackInterface } from '../tracks/interfaces/track.interface';
 
-@WebSocketGateway()
-export class WsGateway {
-  @WebSocketServer()
-  private server: Server;
-
+@Injectable()
+export class WsService {
   private api = new ApiService();
   private playlistId: number;
   private rightTrackId: number;
   private tracks: any;
 
-  private async getNextTrackPull() {
+  private async getNextTrackPull(): Promise<{
+    src: string;
+    tracks: TrackInterface[];
+  }> {
     const returnObject = { tracks: [], src: null };
     if (this.tracks.length < 4) {
       this.tracks = await this.api.getPlaylistById(this.playlistId);
@@ -40,8 +38,14 @@ export class WsGateway {
     return returnObject;
   }
 
-  @SubscribeMessage('start')
-  async start(client: Client, data: any): Promise<WsResponse<object>> {
+  public async start(
+    data,
+  ): Promise<
+    WsResponse<{
+      src: string;
+      tracks: TrackInterface[];
+    }>
+  > {
     this.playlistId = data.playlistId;
     this.tracks = await this.api.getPlaylistById(this.playlistId);
     return {
@@ -50,13 +54,11 @@ export class WsGateway {
     };
   }
 
-  @SubscribeMessage('choose')
-  async choose(client: Client, data: any): Promise<void> {
+  public async choose(client: Client, data): Promise<void> {
     const { trackId } = data;
     setTimeout(() => client.emit('tracks', tracks), 1500);
     client.emit('showCorrect', { choose: trackId, correct: this.rightTrackId });
     client.emit('guess', this.rightTrackId === trackId);
     const tracks = await this.getNextTrackPull();
-    return;
   }
 }
