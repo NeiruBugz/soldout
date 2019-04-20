@@ -28,17 +28,19 @@ export class ApiService {
     }));
   }
 
-  public getPlaylistById(id: number = 5734677122) {
+  public getPlaylistById(id: number) {
     return axios.get(`${this.API_URL}/playlist/${id}`).then(res =>
-      res.data.tracks.data.map(track => ({
-        id: track.id,
-        name: track.title,
-        artist: {
-          id: track.artist.id,
-          name: track.artist.name,
-        },
-        src: track.preview,
-      })),
+      res.data.tracks.data
+        .filter(track => track.preview)
+        .map(track => ({
+          id: track.id,
+          name: track.title,
+          artist: {
+            id: track.artist.id,
+            name: track.artist.name,
+          },
+          src: track.preview,
+        })),
     );
   }
 }
