@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { Playlist } from './interfaces/playlist.interface';
 import { PlaylistsService } from './playlists.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
-import { DeniedGuard } from 'src/guards/denied.guard';
+import { DeniedGuard } from '../../guards/denied.guard';
 
 @Controller('playlists')
 export class PlaylistsController {
