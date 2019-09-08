@@ -2,26 +2,25 @@ version: "3"
 
 services:
   mongodb:
+    container_name: music_mongodb
     image: mongo:latest
     restart: always
     environment:
       - MONGODB_DATABASE=gts
 
   server:
-    build: ./server
+    container_name: music_server
+    build: server
     ports:
-      - "3000:3000"
+      - "4000:3000"
     restart: always
     depends_on:
       - mongodb
-    volumes:
-      - ./server/src:/server/src
-    command: 'npm run start:prod'
+    command: 'yarn start:prod'
 
   client:
-    build:
-      context: client
+    container_name: music_client
+    build: client
     volumes:
       - ./client/build:/client/build
-      - ./client/src:/client/src
     command: 'npm run build'

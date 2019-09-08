@@ -4,5 +4,7 @@ FROM node:10.5-alpine
 WORKDIR /client
 
 # install and cache app dependencies
-COPY . /client
-RUN npm install
+COPY . .
+RUN yarn
+
+RUN yarn build

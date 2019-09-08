@@ -45,7 +45,7 @@ ProgressBar = withRouter(
 class GameField extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = io("ws://gts.dergunov.net:3000", {
+    this.socket = io("wss://api.gts.dergunov.net", {
       transports: ["websocket"],
     });
   }
