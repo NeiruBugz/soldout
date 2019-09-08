@@ -3,9 +3,8 @@ FROM node:10.5-alpine
 WORKDIR /server
 
 # Bundle app source
-COPY . /server
+COPY . .
 
-RUN npm i -g @nestjs/cli
-RUN npm install
+RUN yarn
 
 EXPOSE 3000

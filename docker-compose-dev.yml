@@ -16,8 +16,6 @@ services:
     restart: always
     depends_on:
       - mongodb
-    volumes:
-      - ./server/src:/server/src
     command: 'npm run start'
 
   client:

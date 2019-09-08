@@ -14,14 +14,11 @@ services:
     restart: always
     depends_on:
       - mongodb
-    volumes:
-      - ./server/src:/server/src
-    command: 'npm run start:prod'
+    command: 'yarn start:prod'
 
   client:
     build:
       context: client
     volumes:
       - ./client/build:/client/build
-      - ./client/src:/client/src
     command: 'npm run build'
