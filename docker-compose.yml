@@ -2,21 +2,24 @@ version: "3"
 
 services:
   mongodb:
+    container_name: music10_mongodb
     image: mongo:latest
     restart: always
     environment:
       - MONGODB_DATABASE=gts
 
   server:
+    container_name: music10_server
     build: ./server
     ports:
-      - "3000:3000"
+      - "4000:3000"
     restart: always
     depends_on:
       - mongodb
     command: 'yarn start:prod'
 
   client:
+    container_name: music10_client
     build:
       context: client
     volumes:
