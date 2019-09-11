@@ -10,12 +10,12 @@ import store from "./store/store";
 const history = createBrowserHistory();
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.props = props;
   }
 
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <Router history={history}>
