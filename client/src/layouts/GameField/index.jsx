@@ -3,7 +3,6 @@
 import React from "react";
 import { withRouter } from "react-router";
 import io from "socket.io-client";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { setTracks } from "../../store/actions/tracks";
@@ -80,7 +79,10 @@ class GameField extends React.Component {
   };
 
   render() {
-    const { tracks } = this.props.tracks;
+    const {
+      tracks: { tracks },
+    } = this.props;
+
     return (
       <div className="field">
         <div className="container">
@@ -110,8 +112,5 @@ class GameField extends React.Component {
 
 export default connect(
   state => ({ tracks: state.tracks }),
-  dispatch => ({
-    setTracks: bindActionCreators(setTracks, dispatch),
-    setDot: bindActionCreators(setDot, dispatch),
-  })
+  { setTracks, setDot }
 )(GameField);

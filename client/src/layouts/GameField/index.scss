@@ -18,3 +18,13 @@
   justify-content: space-around;
   flex-wrap: wrap;
 }
+
+.play {
+  text-align: center;
+
+  &__btn {
+    color: #fdfdfd;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+}
