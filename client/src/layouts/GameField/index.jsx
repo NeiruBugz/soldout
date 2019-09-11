@@ -3,8 +3,8 @@
 import React from "react";
 import { withRouter } from "react-router";
 import io from "socket.io-client";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { gameStart } from "../../store/actions/game";
 
 import { setTracks } from "../../store/actions/tracks";
 import { setDot } from "../../store/actions/progress";
@@ -80,7 +80,12 @@ class GameField extends React.Component {
   };
 
   render() {
-    const { tracks } = this.props.tracks;
+    const {
+      tracks: { tracks },
+      isStart,
+      gameStart,
+    } = this.props;
+
     return (
       <div className="field">
         <div className="container">
@@ -89,18 +94,26 @@ class GameField extends React.Component {
               <AudioVisualizer musicUrl={tracks.src} />
             </div>
           </div>
-          <div className="button__grid">
-            {tracks.tracks.map(item => (
-              <Button
-                key={item.id}
-                id={`track_${item.id}`}
-                artist={item.artist}
-                track={item.name}
-                skin="bright"
-                onClick={() => this.onChoose(item.id)}
-              />
-            ))}
-          </div>
+          {isStart ? (
+            <div className="button__grid">
+              {tracks.tracks.map(item => (
+                <Button
+                  key={item.id}
+                  id={`track_${item.id}`}
+                  artist={item.artist}
+                  track={item.name}
+                  skin="bright"
+                  onClick={() => this.onChoose(item.id)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="play">
+              <a className="play__btn" onClick={gameStart}>
+                PLAY ⯈
+              </a>
+            </div>
+          )}
           <ProgressBar />
         </div>
       </div>
@@ -109,9 +122,13 @@ class GameField extends React.Component {
 }
 
 export default connect(
-  state => ({ tracks: state.tracks }),
-  dispatch => ({
-    setTracks: bindActionCreators(setTracks, dispatch),
-    setDot: bindActionCreators(setDot, dispatch),
-  })
+  state => ({
+    tracks: state.tracks,
+    isStart: state.game.isStart,
+  }),
+  {
+    setTracks,
+    setDot,
+    gameStart,
+  }
 )(GameField);
