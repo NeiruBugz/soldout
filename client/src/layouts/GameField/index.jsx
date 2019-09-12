@@ -16,7 +16,11 @@ import ProgressBar from "./ProgressBar";
 class GameField extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = io("wss://api.gts.dergunov.net", {
+    let url = process.env.REACT_APP_WS_PROD_HOST;
+    if (process.env.NODE_ENV !== "production") {
+      url = process.env.REACT_APP_WS_DEV_HOST;
+    }
+    this.socket = io(url, {
       transports: ["websocket"],
     });
   }
@@ -26,7 +30,7 @@ class GameField extends React.Component {
   }
 
   putPlayList = () => {
-    const playlistId = "248297032";
+    const playlistId = "6525568064";
     this.socket.emit("start", { playlistId });
     this.socket.on("tracks", message => {
       this.props.setTracks(message);
