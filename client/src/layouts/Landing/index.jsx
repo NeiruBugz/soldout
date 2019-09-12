@@ -21,20 +21,20 @@ const Landing = () => (
           <div className="row">
             <div className="col-xs-9 col-md-8 col-lg-6">
               <p className={b2()}>
-                Простая игра, вдохновленная «Афиша. Видео».
-                Теперь поиграть могут не только рэперы, но и ты
+                Простая игра, вдохновленная «Афиша. Видео». Теперь поиграть
+                могут не только рэперы, но и ты
               </p>
             </div>
           </div>
         </div>
         <div className="vinyl">
-          <img className="vinyl__image" src={vinyl} alt="Vinyl"/>
+          <img className="vinyl__image" src={vinyl} alt="Vinyl" />
         </div>
       </div>
       <div className="row">
         <div className="col-xs-10 col-md-10 col-lg-4">
           <a href="/game">
-            <Button artist="Сыграть" theme="landing"/>
+            <Button artist="Сыграть" theme="landing" />
           </a>
         </div>
       </div>
