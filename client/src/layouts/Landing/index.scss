@@ -34,27 +34,6 @@
   }
 }
 
-.heading {
-  font-family: "Rubik", sans-serif;
-  font-weight: 900;
-  font-size: 3rem;
-  color: #fdfdfd;
-
-  @media (max-width: 1024px) {
-    font-size: 1.5rem;
-  }
-}
-
-.para {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.25rem;
-  color: #fdfdfd;
-
-  @media (max-width: 1024px) {
-    font-size: 1rem;
-  }
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
