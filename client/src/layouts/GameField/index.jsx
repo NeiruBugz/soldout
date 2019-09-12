@@ -63,7 +63,7 @@ class GameField extends React.Component {
   // }
 
   putPlayList = () => {
-    const playlistId = "248297032";
+    const playlistId = "6525568064";
     this.socket.emit("start", { playlistId });
     this.socket.on("tracks", message => {
       this.props.setTracks(message);
