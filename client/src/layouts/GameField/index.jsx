@@ -85,39 +85,50 @@ class GameField extends React.Component {
     const { disabled, choose, correct } = this.state;
 
     return choosedPlaylist ? (
-      <div className="field">
-        <div className="container">
-          <div className="row center-xs">
-            <div className="col-xs">
-              <AudioComponent musicUrl={tracks.src} />
+      <>
+        <div className="field">
+          <div className="container">
+            <div className="row center-xs">
+              <div className="col-xs">
+                <AudioComponent musicUrl={tracks.src} />
+              </div>
+            </div>
+            {isPlaying && (
+              <>
+                <div className="button__grid">
+                  {tracks.tracks.map(item => (
+                    <Button
+                      key={item.id}
+                      id={`track_${item.id}`}
+                      artist={item.artist}
+                      track={item.name}
+                      skin="bright"
+                      status={
+                        item.id === correct
+                          ? 'correct'
+                          : correct && item.id === choose
+                          ? 'error'
+                          : null
+                      }
+                      onClick={() => !disabled && this.onChoose(item.id)}
+                    />
+                  ))}
+                </div>
+                <ProgressBar />
+              </>
+            )}
+          </div>
+        </div>
+        <footer style={{ position: 'fixed', bottom: 40, left: 40 }}>
+          <div className="container">
+            <div className="row">
+              <div className="col-xs">
+                <a href="/form">Дать фидбек</a>
+              </div>
             </div>
           </div>
-          {isPlaying && (
-            <>
-              <div className="button__grid">
-                {tracks.tracks.map(item => (
-                  <Button
-                    key={item.id}
-                    id={`track_${item.id}`}
-                    artist={item.artist}
-                    track={item.name}
-                    skin="bright"
-                    status={
-                      item.id === correct
-                        ? 'correct'
-                        : correct && item.id === choose
-                        ? 'error'
-                        : null
-                    }
-                    onClick={() => !disabled && this.onChoose(item.id)}
-                  />
-                ))}
-              </div>
-              <ProgressBar />
-            </>
-          )}
-        </div>
-      </div>
+        </footer>
+      </>
     ) : (
       <ChoosePlaylist />
     );
