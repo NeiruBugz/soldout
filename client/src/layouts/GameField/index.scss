@@ -13,10 +13,10 @@
 }
 
 .progress-bar {
-  margin-top: 60px;
+  margin: 30px 0;
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .play {
