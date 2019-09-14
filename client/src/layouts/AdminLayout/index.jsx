@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { compose } from '@material-ui/system';
 import { connect } from 'react-redux';
 
 import { setReviews } from '../../store/actions/admin';
@@ -18,6 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import axios from '../../helpers/axios';
 
 import './styles.scss';
+import { Link, Button } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -50,6 +50,9 @@ class AdminLayout extends React.Component {
             <Typography variant="h6" className={classes.title}>
               Админка
             </Typography>
+            <Button color="inherit">
+              <a href="/">В игру</a>
+            </Button>
           </Toolbar>
         </AppBar>
         <Paper className={classes.root}>
