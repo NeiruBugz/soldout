@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Rubik:900&subset=cyrillic");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Rubik:900&subset=cyrillic');
 
 html {
   font-size: 16px;
@@ -13,7 +13,7 @@ body {
 }
 
 .heading {
-  font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-weight: 900;
   font-size: 3rem;
   color: #fdfdfd;
@@ -24,7 +24,7 @@ body {
 }
 
 .para {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
   color: #fdfdfd;
   text-align: left;
@@ -40,4 +40,10 @@ body {
 
 .mt50 {
   margin-top: 50px;
+}
+
+.feedback-link {
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: #fdfdfd;
 }
