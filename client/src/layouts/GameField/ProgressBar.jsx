@@ -8,7 +8,7 @@ const ProgressBar = ({ dots, history, choosePlaylist }) => {
   const myDots = [...dots.dots];
   if (myDots.length === 20) {
     choosePlaylist(null);
-    history.push("/");
+    history.push("/game/over");
   }
   while (myDots.length < 20) {
     myDots.push(null);
