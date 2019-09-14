@@ -45,10 +45,8 @@ class GameField extends React.Component {
     const { choosedPlaylist: playlistId, setTracks, setDot } = this.props;
 
     this.socket.emit("start", { playlistId });
-    let f = true;
     this.socket.on("tracks", message => {
-      f && setTracks(message);
-      f = false;
+      setTracks(message);
       this.setState({ disabled: false });
     });
 
