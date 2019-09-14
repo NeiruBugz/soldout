@@ -1,8 +1,8 @@
-import React from "react";
-import block from "bem-cn";
-import "./index.scss";
+import React from 'react';
+import block from 'bem-cn';
+import './index.scss';
 
-const b = block("button");
+const b = block('button');
 
 const Button = ({ type, track, artist, theme, status = "", ...rest }) => (
   <button
