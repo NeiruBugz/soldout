@@ -15,7 +15,7 @@ const Landing = () => (
         <div className="content">
           <div className="row">
             <div className="col-xs-9 col-md-8 col-lg-6">
-              <h1 className={b()}>Узнать за 30 секунд</h1>
+              <h1 className={b()}>Узнать за 10 секунд</h1>
             </div>
           </div>
           <div className="row">

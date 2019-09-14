@@ -19,6 +19,6 @@ export class PlaylistsService {
   }
 
   async delete(playlistId: number): Promise<Playlist[]> {
-    return this.playlistModel.deleteOne({id: playlistId});
+    return this.playlistModel.deleteOne({ id: playlistId });
   }
 }
