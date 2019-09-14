@@ -34,6 +34,13 @@ class GameField extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { choosedPlaylist } = this.props;
+    if (choosedPlaylist) {
+      this.putPlayList();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { choosedPlaylist } = this.props;
     if (choosedPlaylist !== prevProps.choosedPlaylist) {
