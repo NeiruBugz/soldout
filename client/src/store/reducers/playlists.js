@@ -1,4 +1,4 @@
-import { CHOOSE_PLAYLIST, SET_PLAYLISTS } from "../actions/playlists";
+import { CHOOSE_PLAYLIST, SET_PLAYLISTS } from '../actions/playlists';
 
 const initialState = {
   playlists: [],

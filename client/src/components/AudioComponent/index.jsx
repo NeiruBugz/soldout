@@ -30,10 +30,13 @@ class AudioComponent extends React.Component {
     this.audio.currentTime = 0;
     this.audio.pause();
   }
-  
+
   play = () => {
     if (this.audio) {
-      this.audio.play().then(() => this.props.setPlaying(true));
+      this.audio
+        .play()
+        .then(() => this.props.setPlaying(true))
+        .catch(() => this.props.setPlaying(false));
     }
   };
 
