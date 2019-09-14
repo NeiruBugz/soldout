@@ -3,6 +3,7 @@
 import React from "react";
 import io from "socket.io-client";
 import { connect } from "react-redux";
+import ChoosePlaylist from "../../components/ChoosePlaylist";
 
 import { setTracks } from "../../store/actions/tracks";
 import { setDot } from "../../store/actions/progress";
@@ -16,33 +17,51 @@ import ProgressBar from "./ProgressBar";
 class GameField extends React.Component {
   constructor(props) {
     super(props);
+
     let url = process.env.REACT_APP_WS_PROD_HOST;
     if (process.env.NODE_ENV !== "production") {
       url = process.env.REACT_APP_WS_DEV_HOST;
     }
+
     this.socket = io(url, {
       transports: ["websocket"],
     });
+
+    this.state = {
+      disabled: true,
+      choose: null,
+      correct: null,
+    };
   }
 
-  componentDidMount() {
-    this.putPlayList();
+  componentDidUpdate(prevProps) {
+    const { choosedPlaylist } = this.props;
+    if (choosedPlaylist !== prevProps.choosedPlaylist) {
+      this.putPlayList();
+    }
   }
 
   putPlayList = () => {
-    const playlistId = "6525568064";
+    const { choosedPlaylist: playlistId, setTracks, setDot } = this.props;
+
     this.socket.emit("start", { playlistId });
+    let f = true;
     this.socket.on("tracks", message => {
-      this.props.setTracks(message);
+      f && setTracks(message);
+      f = false;
+      this.setState({ disabled: false });
     });
+
     this.socket.on("showCorrect", message => {
-      document.getElementById(`track_${message.choose}`).classList.add("error");
-      document
-        .getElementById(`track_${message.correct}`)
-        .classList.add("correct");
+      this.setState({
+        choose: message.choose,
+        correct: message.correct,
+        disabled: true,
+      });
     });
+
     this.socket.on("guess", message => {
-      this.props.setDot(message);
+      setDot(message);
     });
   };
 
@@ -54,9 +73,12 @@ class GameField extends React.Component {
     const {
       tracks: { tracks },
       isPlaying,
+      choosedPlaylist,
     } = this.props;
 
-    return (
+    const { disabled, choose, correct } = this.state;
+
+    return choosedPlaylist ? (
       <div className="field">
         <div className="container">
           <div className="row center-xs">
@@ -74,7 +96,14 @@ class GameField extends React.Component {
                     artist={item.artist}
                     track={item.name}
                     skin="bright"
-                    onClick={() => this.onChoose(item.id)}
+                    status={
+                      item.id === correct
+                        ? "correct"
+                        : correct && item.id === choose
+                        ? "error"
+                        : null
+                    }
+                    onClick={() => !disabled && this.onChoose(item.id)}
                   />
                 ))}
               </div>
@@ -83,6 +112,8 @@ class GameField extends React.Component {
           )}
         </div>
       </div>
+    ) : (
+      <ChoosePlaylist />
     );
   }
 }
@@ -91,6 +122,7 @@ export default connect(
   state => ({
     tracks: state.tracks,
     isPlaying: state.game.isPlaying,
+    choosedPlaylist: state.playlists.choosedPlaylist,
   }),
   { setTracks, setDot }
 )(GameField);

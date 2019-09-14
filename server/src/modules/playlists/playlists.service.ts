@@ -11,10 +11,14 @@ export class PlaylistsService {
 
   async create(createPlaylistDto: CreatePlaylistDto): Promise<Playlist> {
     const createdPlaylist = new this.playlistModel(createPlaylistDto);
-    return await createdPlaylist.save();
+    return createdPlaylist.save();
   }
 
   async findAll(): Promise<Playlist[]> {
-    return await this.playlistModel.find().exec();
+    return this.playlistModel.find().exec();
+  }
+
+  async delete(playlistId: number): Promise<Playlist[]> {
+    return this.playlistModel.deleteOne({id: playlistId});
   }
 }

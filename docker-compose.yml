@@ -2,11 +2,15 @@ version: "3"
 
 services:
   mongodb:
+    build: mongo
     container_name: music10_mongodb
-    image: mongo:latest
-    restart: always
+    command: mongod
     environment:
-      - MONGODB_DATABASE=gts
+      MONGO_INITDB_DATABASE: "music10"
+    volumes:
+      - ./data/db:/data/db
+      - ./data/backup:/data/backup
+    restart: always
 
   server:
     container_name: music10_server
@@ -16,11 +20,11 @@ services:
     restart: always
     depends_on:
       - mongodb
-    command: 'yarn start:prod'
+    command: "yarn start:prod"
 
   client:
     container_name: music10_client
     build: client
     volumes:
       - ./client/build:/client/build
-    command: 'npm run build'
+    command: "yarn build"
