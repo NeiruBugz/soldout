@@ -18,7 +18,6 @@ class FeedbackForm extends React.Component {
   onFormSubmit = e => {
     e.preventDefault();
     let data = this.state;
-    console.log(data);
     axios.post("/reviews", { data });
   };
 
