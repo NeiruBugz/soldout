@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
 import game from "./game";
-import tracks from "./track";
+import playlists from "./playlists";
 import progressBar from "./progressBar";
+import tracks from "./track";
 
 const reducers = combineReducers({
   game,
-  tracks,
+  playlists,
   progressBar,
+  tracks,
 });
 
 export default reducers;

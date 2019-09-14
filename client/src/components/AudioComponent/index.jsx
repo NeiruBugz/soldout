@@ -14,9 +14,9 @@ class AudioComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { musicUrl } = this.props;
     this.audio.currentTime = 0;
     this.audio.pause();
-    const { musicUrl } = this.props;
     if (musicUrl) {
       this.audio.src = this.props.musicUrl;
       this.audio
@@ -26,6 +26,11 @@ class AudioComponent extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.audio.currentTime = 0;
+    this.audio.pause();
+  }
+  
   play = () => {
     if (this.audio) {
       this.audio.play().then(() => this.props.setPlaying(true));

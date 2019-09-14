@@ -2,27 +2,11 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "bem-cn": "^3.0.1",
-    "flexboxgrid2": "^7.2.1",
-    "history": "^4.9.0",
-    "node-sass": "^4.12.0",
-    "normalize.css": "^8.0.1",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-redux": "^6.0.1",
-    "react-router": "^5.0.0",
-    "react-scripts": "2.1.8",
-    "redux": "^4.0.1",
-    "socket.io-client": "^2.2.0"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged",
-    "deploy": "scp -r build/* root@dergunov.net:/var/www/gts.dergunov.net/client/",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -32,22 +16,27 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-prettier": "^3.0.0",
-    "eslint-plugin-react": "^7.11.1",
-    "husky": "^1.2.0",
-    "lint-staged": "^8.1.0",
-    "prettier": "^1.15.2"
+  "dependencies": {
+    "bem-cn": "^3.0.1",
+    "flexboxgrid2": "^7.2.1",
+    "history": "^4.10.1",
+    "node-sass": "^4.12.0",
+    "normalize.css": "^8.0.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "react-router": "^5.0.1",
+    "react-scripts": "^3.1.1",
+    "redux": "^4.0.4",
+    "socket.io-client": "^2.2.0"
   },
-  "lint-staged": {
-    "*.{js, jsx}": [
-      "node_modules/.bin/eslint --max-warnings=2",
-      "prettier --write",
-      "git add"
-    ]
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.18.2"
   }
 }

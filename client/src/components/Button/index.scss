@@ -38,11 +38,21 @@
 .button.correct {
   border-color: #26c281;
   color: #26c281;
+
+  &:hover {
+    background-color: #26c281;
+    color: #fdfdfd;
+  }
 }
 
-.button.choose {
+.button.error {
   border-color: #c91f37;
   color: #c91f37;
+
+  &:hover {
+    background-color: #c91f37;
+    color: #fdfdfd;
+  }
 }
 
 .button__track {
