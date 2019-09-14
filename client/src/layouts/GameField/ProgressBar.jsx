@@ -7,8 +7,10 @@ import { choosePlaylist } from "../../store/actions/playlists";
 const ProgressBar = ({ dots, history, choosePlaylist }) => {
   const myDots = [...dots.dots];
   if (myDots.length === 20) {
-    choosePlaylist(null);
-    history.push("/game/over");
+    setTimeout(() => {
+      choosePlaylist(null);
+      history.push("/game/over");
+    }, 1000);
   }
   while (myDots.length < 20) {
     myDots.push(null);
