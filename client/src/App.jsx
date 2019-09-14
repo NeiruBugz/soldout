@@ -8,6 +8,7 @@ import GameOver from "./components/GameOver";
 import Landing from "./layouts/Landing";
 import store from "./store/store";
 import "./App.scss";
+import FeedbackForm from "./layouts/FeedbackForm";
 
 const history = createBrowserHistory();
 
@@ -17,6 +18,7 @@ const App = () => (
       <Route exact component={Landing} path="/" />
       <Route exact component={GameOver} path="/game/over" />
       <Route exact component={GameField} path="/game" />
+      <Route exact component={FeedbackForm} path="/form" />
     </Router>
   </Provider>
 );
