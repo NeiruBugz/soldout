@@ -8,7 +8,7 @@ class GameOver extends Component {
   componentDidMount() {
     const { dots, history } = this.props;
     if (dots.length < 20) {
-      history.push('/');
+      history.push("/");
     }
   }
 
@@ -34,9 +34,12 @@ class GameOver extends Component {
             Угадано {dots.filter(dot => dot).length} из {dots.length} треков
           </p>
         </div>
-        <div className="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 center-xs mt50">
+        <div className="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 center-xs mt50">
           <a href="/">
             <Button artist="Сыграть еще раз" theme="landing" />
+          </a>
+          <a href="/form" className="mt50">
+            <Button artist="Дать фидбэк" theme="landing" />
           </a>
         </div>
       </div>
