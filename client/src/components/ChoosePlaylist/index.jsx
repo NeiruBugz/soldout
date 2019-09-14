@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { choosePlaylist, setPlaylists } from "../../store/actions/playlists";
 import Button from "../Button/Button";
+import axios from "../../helpers/axios";
 
 class ChoosePlaylist extends Component {
   componentDidMount() {
     const { setPlaylists } = this.props;
-    fetch("http://localhost:4000/playlists")
-      .then(res => res.json())
-      .then(res => setPlaylists(res));
+    axios
+      .get("/playlists")
+      .then(({ data }) => setPlaylists(data));
   }
-  
+
   render() {
     const { playlists, choosePlaylist } = this.props;
 
