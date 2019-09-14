@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { WsResponse } from '@nestjs/websockets';
-import { Client } from 'socket.io';
+import { Socket } from 'socket.io';
 
 import { ApiService } from '../api/api.service';
 import { TrackInterface } from '../tracks/interfaces/track.interface';
@@ -54,7 +54,7 @@ export class WsService {
     };
   }
 
-  public async choose(client: Client, data): Promise<void> {
+  public async choose(client: Socket, data): Promise<void> {
     const { trackId } = data;
     setTimeout(() => client.emit('tracks', tracks), 1500);
     client.emit('showCorrect', { choose: trackId, correct: this.rightTrackId });
