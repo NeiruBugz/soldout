@@ -3,24 +3,34 @@ import {
   WebSocketGateway,
   WebSocketServer,
   WsResponse,
+  OnGatewayDisconnect,
+  OnGatewayConnection,
 } from '@nestjs/websockets';
-import { Client, Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { WsService } from './ws.service';
 
 @WebSocketGateway()
-export class WsGateway {
+export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   private server: Server;
 
-  constructor(private readonly wsService: WsService) {}
+  private clients: Record<string, WsService> = {};
 
   @SubscribeMessage('start')
-  public start(client: Client, data: any): Promise<WsResponse<object>> {
-    return this.wsService.start(data);
+  public start(client: Socket, data: any): Promise<WsResponse<object>> {
+    return this.clients[client.id].start(data);
   }
 
   @SubscribeMessage('choose')
-  public choose(client: Client, data: any): void {
-    this.wsService.choose(client, data);
+  public choose(client: Socket, data: any): void {
+    this.clients[client.id].choose(client, data);
+  }
+
+  handleConnection(client: Socket, ...args: any[]) {
+    this.clients[client.id] = new WsService();
+  }
+
+  public handleDisconnect(client: Socket) {
+    delete this.clients[client.id];
   }
 }

@@ -12,6 +12,12 @@ class GameOver extends Component {
     }
   }
 
+  onClick = () => {
+    const { choosePlaylist, history } = this.props;
+    choosePlaylist(this.BONUS_PLAYLSIT_ID);
+    history.push('/game');
+  };
+
   render() {
     const { dots } = this.props;
     const title =
@@ -35,17 +41,16 @@ class GameOver extends Component {
         </div>
         <div className="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 center-xs mt50">
           <Button artist={<a href="/">Сыграть еще раз</a>} theme="landing" />
-          <Button
-            artist={<a href="/form">Дать фидбэк</a>}
-            theme="landing"
-            className="mt50"
-          />
+          <Button artist="Бонус-игра" theme="form" style={{ marginTop: 20 }} />
         </div>
       </div>
     );
   }
 }
 
-export default connect(state => ({
-  dots: state.progressBar.dots,
-}))(withRouter(GameOver));
+export default connect(
+  state => ({
+    dots: state.progressBar.dots,
+  }),
+  { choosePlaylist }
+)(withRouter(GameOver));

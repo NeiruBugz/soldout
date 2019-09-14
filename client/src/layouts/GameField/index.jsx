@@ -4,6 +4,7 @@ import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import ChoosePlaylist from '../../components/ChoosePlaylist';
+import { WS_DEFAULT_HOST } from "../../helpers/variables";
 
 import { setTracks } from '../../store/actions/tracks';
 import { setDot } from '../../store/actions/progress';
@@ -18,10 +19,7 @@ class GameField extends React.Component {
   constructor(props) {
     super(props);
 
-    let url = process.env.REACT_APP_WS_PROD_HOST;
-    if (process.env.NODE_ENV !== 'production') {
-      url = process.env.REACT_APP_WS_DEV_HOST;
-    }
+    const url = process.env.WS_HOST || WS_DEFAULT_HOST;
 
     this.socket = io(url, {
       transports: ['websocket'],
