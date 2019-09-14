@@ -73,3 +73,17 @@
     width: 300px;
   }
 }
+
+.button_theme_form {
+  height: 80px;
+  background-color: #ffbc3d;
+  color: #fdfdfd;
+  cursor: pointer;
+  margin-bottom: 50px;
+
+  @media (max-width: 425px) {
+    height: 60px;
+    font-size: 1.5rem;
+    width: 300px;
+  }
+}

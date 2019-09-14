@@ -1,24 +1,33 @@
-import React from "react";
-import axios from "../../helpers/axios";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import axios from '../../helpers/axios';
 
-import Button from "../../components/Button/Button";
+import Button from '../../components/Button/Button';
 
-import "./styles.scss";
+import './styles.scss';
+import { choosePlaylist } from '../../store/actions/playlists';
 
 class FeedbackForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       score: 0,
-      playlists: "",
-      bugs: "",
+      playlists: '',
+      bugs: '',
     };
+
+    this.BONUS_PLAYLSIT_ID = 6538306484;
   }
 
   onFormSubmit = e => {
     e.preventDefault();
+    const { choosePlaylist, history } = this.props;
     let data = this.state;
-    axios.post("/reviews", { data });
+    axios.post('/reviews', { ...data }).then(() => {
+      choosePlaylist(this.BONUS_PLAYLSIT_ID);
+      history.push('/game');
+    });
   };
 
   onRangeChange = e => {
@@ -54,6 +63,7 @@ class FeedbackForm extends React.Component {
               step="1"
               value={score}
               onChange={this.onRangeChange}
+              required
             />
           </>
           <>
@@ -65,11 +75,12 @@ class FeedbackForm extends React.Component {
               id="missing-input"
               placeholder="Напиши что-нибудь"
               onChange={this.onGenresChange}
+              required
             />
           </>
           <>
             <label htmlFor="bug-report">
-              Ошибки, баги и предложения. Напиши тут{" "}
+              Ошибки, баги и предложения. Напиши тут{' '}
               <span role="img" aria-label="love-emoji">
                 ❤️
               </span>
@@ -79,13 +90,21 @@ class FeedbackForm extends React.Component {
               id="bug-report"
               placeholder="Напиши что-нибудь"
               onChange={this.onBugsChange}
+              required
             />
           </>
-          <Button artist="Отправить и получить бонусный раунд" type="submit" />
+          <Button
+            artist="Отправить и получить бонусный раунд"
+            type="submit"
+            theme="form"
+          />
         </form>
       </section>
     );
   }
 }
 
-export default FeedbackForm;
+export default connect(
+  null,
+  { choosePlaylist }
+)(withRouter(FeedbackForm));
