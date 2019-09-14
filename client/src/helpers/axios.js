@@ -1,7 +1,12 @@
-import axios from "axios";
+import axios from 'axios';
+console.log(
+  process.env.API_HOST,
+  process.env.API_DEFAULT_HOST,
+  process.env.API_HOST || process.env.API_DEFAULT_HOST
+);
 
 const axiosInstance = axios.create({
-  baseURL: 'https://api.music10.ru/',
+  baseURL: process.env.API_HOST || process.env.API_DEFAULT_HOST,
   timeout: 1000,
 });
 
