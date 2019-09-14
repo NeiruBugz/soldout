@@ -1,30 +1,30 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-array-index-key */
-import React from "react";
-import io from "socket.io-client";
-import { connect } from "react-redux";
-import ChoosePlaylist from "../../components/ChoosePlaylist";
+import React from 'react';
+import io from 'socket.io-client';
+import { connect } from 'react-redux';
+import ChoosePlaylist from '../../components/ChoosePlaylist';
 
-import { setTracks } from "../../store/actions/tracks";
-import { setDot } from "../../store/actions/progress";
+import { setTracks } from '../../store/actions/tracks';
+import { setDot } from '../../store/actions/progress';
 
-import AudioComponent from "../../components/AudioComponent";
-import Button from "../../components/Button/Button";
+import AudioComponent from '../../components/AudioComponent';
+import Button from '../../components/Button/Button';
 
-import "./index.scss";
-import ProgressBar from "./ProgressBar";
+import './index.scss';
+import ProgressBar from './ProgressBar';
 
 class GameField extends React.Component {
   constructor(props) {
     super(props);
 
     let url = process.env.REACT_APP_WS_PROD_HOST;
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_WS_DEV_HOST;
     }
 
     this.socket = io(url, {
-      transports: ["websocket"],
+      transports: ['websocket'],
     });
 
     this.state = {
@@ -32,6 +32,13 @@ class GameField extends React.Component {
       choose: null,
       correct: null,
     };
+  }
+
+  componentDidMount() {
+    const { choosedPlaylist } = this.props;
+    if (choosedPlaylist) {
+      this.putPlayList();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -44,14 +51,14 @@ class GameField extends React.Component {
   putPlayList = () => {
     const { choosedPlaylist: playlistId, setTracks, setDot } = this.props;
 
-    this.socket.emit("start", { playlistId });
-    
-    this.socket.on("tracks", message => {
+    this.socket.emit('start', { playlistId });
+
+    this.socket.on('tracks', message => {
       setTracks(message);
       this.setState({ disabled: false });
     });
 
-    this.socket.on("showCorrect", message => {
+    this.socket.on('showCorrect', message => {
       this.setState({
         choose: message.choose,
         correct: message.correct,
@@ -59,13 +66,13 @@ class GameField extends React.Component {
       });
     });
 
-    this.socket.on("guess", message => {
+    this.socket.on('guess', message => {
       setDot(message);
     });
   };
 
   onChoose = trackId => {
-    this.socket.emit("choose", { trackId });
+    this.socket.emit('choose', { trackId });
   };
 
   render() {
@@ -97,9 +104,9 @@ class GameField extends React.Component {
                     skin="bright"
                     status={
                       item.id === correct
-                        ? "correct"
+                        ? 'correct'
                         : correct && item.id === choose
-                        ? "error"
+                        ? 'error'
                         : null
                     }
                     onClick={() => !disabled && this.onChoose(item.id)}

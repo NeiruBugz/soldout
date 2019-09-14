@@ -14,7 +14,6 @@ class GameOver extends Component {
 
   render() {
     const { dots } = this.props;
-    console.log(dots);
     const title =
       dots > 5
         ? dots > 10
