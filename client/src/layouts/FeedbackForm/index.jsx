@@ -1,28 +1,35 @@
 import React from "react";
+import axios from "../../helpers/axios";
+
+import Button from "../../components/Button/Button";
+
 import "./styles.scss";
 
 class FeedbackForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rangeValue: 0,
-      genres: "",
+      score: 0,
+      playlists: "",
       bugs: "",
     };
   }
 
   onFormSubmit = e => {
     e.preventDefault();
+    let data = this.state;
+    console.log(data);
+    axios.post("/reviews", { data });
   };
+
   onRangeChange = e => {
-    console.log(e.target.value);
     this.setState({
-      rangeValue: e.target.value,
+      score: e.target.value,
     });
   };
 
   onGenresChange = e => {
-    this.setState({ genres: e.target.value });
+    this.setState({ playlists: e.target.value });
   };
 
   onBugsChange = e => {
@@ -30,14 +37,14 @@ class FeedbackForm extends React.Component {
   };
 
   render() {
-    let { rangeValue } = this.state;
+    let { score } = this.state;
     return (
       <section className="form-layout">
         <>
           <h1 className="form-layout__title">Помоги сделать сервис лучше</h1>
-          <p className="form-layout__subtitle">опрос 1 минута</p>
+          <p className="form-layout__subtitle">опрос займет 1 минуту</p>
         </>
-        <form className="form">
+        <form className="form" onSubmit={this.onFormSubmit}>
           <>
             <label htmlFor="like-range">Тебе понравилось?</label>
             <input
@@ -46,7 +53,7 @@ class FeedbackForm extends React.Component {
               min="0"
               max="10"
               step="1"
-              value={rangeValue}
+              value={score}
               onChange={this.onRangeChange}
             />
           </>
@@ -75,6 +82,7 @@ class FeedbackForm extends React.Component {
               onChange={this.onBugsChange}
             />
           </>
+          <Button artist="Отправить и получить бонусный раунд" type="submit" />
         </form>
       </section>
     );
