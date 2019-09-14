@@ -1,30 +1,29 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import { choosePlaylist, setPlaylists } from "../../store/actions/playlists";
-import Button from "../Button/Button";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { choosePlaylist, setPlaylists } from '../../store/actions/playlists';
+import Button from '../Button/Button';
 
 class GameOver extends Component {
   componentDidMount() {
     const { dots, history } = this.props;
     if (dots.length < 20) {
-      history.push("/");
+      history.push('/');
     }
   }
 
   render() {
     const { dots } = this.props;
-    console.log(dots);
     const title =
       dots > 5
         ? dots > 10
           ? dots > 15
             ? dots > 19
-              ? "Прекрасно"
-              : "Отлично!"
-            : "Хорошо!"
-          : "Неплохо!"
-        : "Попробуй еще раз!";
+              ? 'Прекрасно'
+              : 'Отлично!'
+            : 'Хорошо!'
+          : 'Неплохо!'
+        : 'Попробуй еще раз!';
 
     return (
       <div>
@@ -35,12 +34,12 @@ class GameOver extends Component {
           </p>
         </div>
         <div className="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 center-xs mt50">
-          <a href="/">
-            <Button artist="Сыграть еще раз" theme="landing" />
-          </a>
-          <a href="/form" className="mt50">
-            <Button artist="Дать фидбэк" theme="landing" />
-          </a>
+          <Button artist={<a href="/">Сыграть еще раз</a>} theme="landing" />
+          <Button
+            artist={<a href="/form">Дать фидбэк</a>}
+            theme="landing"
+            className="mt50"
+          />
         </div>
       </div>
     );
