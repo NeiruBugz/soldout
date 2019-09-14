@@ -1,8 +1,8 @@
-import block from "bem-cn";
-import React from "react";
-import Button from "../Button/Button";
+import block from 'bem-cn';
+import React from 'react';
+import Button from '../Button/Button';
 
-const b2 = block("para");
+const b2 = block('para');
 
 const StartMessage = ({ btnAction }) => (
   <div className="landing">

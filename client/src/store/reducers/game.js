@@ -1,4 +1,4 @@
-import { SET_PLAYING } from "../actions/game";
+import { SET_PLAYING } from '../actions/game';
 
 const initialState = {
   isPlaying: false,
