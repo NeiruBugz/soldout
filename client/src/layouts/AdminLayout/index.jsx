@@ -25,6 +25,7 @@ const styles = theme => ({
     width: '100%',
     height: '100vh',
     overflowX: 'auto',
+    marginTop: theme.spacing(2),
   },
   table: {
     minWidth: 320,
@@ -44,7 +45,7 @@ class AdminLayout extends React.Component {
     const { classes, reviews } = this.props;
     return (
       <>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
               Админка
