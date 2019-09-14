@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export const PlaylistSchema = new mongoose.Schema({
-  number: Number,
+  playlistId: Number,
   name: String,
 });

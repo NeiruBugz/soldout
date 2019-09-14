@@ -1,4 +1,4 @@
 export class CreatePlaylistDto {
-  readonly number: number;
+  readonly playlistId: number;
   readonly name: string;
 }

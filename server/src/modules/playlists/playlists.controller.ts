@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { Playlist } from './interfaces/playlist.interface';
 import { PlaylistsService } from './playlists.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
@@ -11,11 +19,17 @@ export class PlaylistsController {
   @Post()
   @UseGuards(DeniedGuard)
   async create(@Body() createPlaylistDto: CreatePlaylistDto) {
-    this.playlistsService.create(createPlaylistDto);
+    return await this.playlistsService.create(createPlaylistDto);
   }
 
   @Get()
   async findAll(): Promise<Playlist[]> {
     return this.playlistsService.findAll();
+  }
+
+  @Delete(':id')
+  @UseGuards(DeniedGuard)
+  async remove(@Param() playlistId: number) {
+    return this.playlistsService.delete(playlistId);
   }
 }
