@@ -2,6 +2,8 @@ import React from 'react';
 import block from 'bem-cn';
 
 import './index.scss';
+import { Link } from 'react-router-dom';
+import Footer from "../../components/Footer";
 import vinyl from '../../vinyl.svg';
 import Button from '../../components/Button/Button';
 
@@ -34,22 +36,14 @@ const Landing = () => (
         </div>
         <div className="row">
           <div className="col-xs-10 col-md-10 col-lg-4">
-            <a href="/game">
+            <Link to="/game">
               <Button artist="Сыграть" theme="landing" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
     </div>
-    <footer>
-      <div className="container">
-        <div className="row">
-          <div className="col-xs">
-            <a href="/form">Дать фидбек</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </>
 );
 
