@@ -27,4 +27,3 @@ services:
     build: client
     volumes:
       - ./client/build:/client/build
-    command: "yarn build"

@@ -21,7 +21,7 @@ class AudioComponent extends React.Component {
 
     if (musicUrl) {
       this.audio.src = this.props.musicUrl;
-      this.play();
+      this.audio.oncanplaythrough = this.play;
     }
   }
 
@@ -37,7 +37,9 @@ class AudioComponent extends React.Component {
 
   play = () => {
     const { setPlaying } = this.props;
-
+    
+    this.audio.oncanplaythrough = null;
+    
     if (this.audio) {
       this.audio
         .play()
