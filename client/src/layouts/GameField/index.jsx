@@ -4,8 +4,9 @@ import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import ChoosePlaylist from '../../components/ChoosePlaylist';
-import Footer from "../../components/Footer";
+import Footer from '../../components/Footer';
 import { WS_DEFAULT_HOST } from '../../helpers/variables';
+import { choosePlaylist } from '../../store/actions/playlists';
 
 import { setTracks } from '../../store/actions/tracks';
 import { setDot } from '../../store/actions/progress';
@@ -48,7 +49,12 @@ class GameField extends React.Component {
   }
 
   putPlayList = () => {
-    const { choosedPlaylist: playlistId, setTracks, setDot } = this.props;
+    const {
+      choosedPlaylist: playlistId,
+      setTracks,
+      setDot,
+      choosePlaylist,
+    } = this.props;
 
     this.socket.emit('start', { playlistId });
 
@@ -67,6 +73,10 @@ class GameField extends React.Component {
 
     this.socket.on('guess', message => {
       setDot(message);
+    });
+
+    this.socket.on('disconnect', () => {
+      choosePlaylist(null);
     });
   };
 
@@ -132,5 +142,5 @@ export default connect(
     isPlaying: state.game.isPlaying,
     choosedPlaylist: state.playlists.choosedPlaylist,
   }),
-  { setTracks, setDot }
+  { setTracks, setDot, choosePlaylist }
 )(GameField);
