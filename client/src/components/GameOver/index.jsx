@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { choosePlaylist, setPlaylists } from '../../store/actions/playlists';
+import { Link } from 'react-router-dom';
+
+import { clearProgress } from '../../store/actions/progress';
 import Button from '../Button/Button';
 
 class GameOver extends Component {
@@ -12,20 +14,19 @@ class GameOver extends Component {
     }
   }
 
-  onClick = () => {
-    const { choosePlaylist, history } = this.props;
-    choosePlaylist(this.BONUS_PLAYLSIT_ID);
-    history.push('/game');
-  };
+  componentWillUnmount() {
+    const { clearProgress } = this.props;
+    clearProgress();
+  }
 
   render() {
     const { dots } = this.props;
     const title =
-      dots > 5
-        ? dots > 10
-          ? dots > 15
-            ? dots > 19
-              ? 'Прекрасно'
+      dots.length > 5
+        ? dots.length > 10
+          ? dots.length > 15
+            ? dots.length > 19
+              ? 'Великолепно!'
               : 'Отлично!'
             : 'Хорошо!'
           : 'Неплохо!'
@@ -40,8 +41,16 @@ class GameOver extends Component {
           </p>
         </div>
         <div className="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 center-xs mt50">
-          <Button artist={<a href="/">Сыграть еще раз</a>} theme="landing" />
-          <Button artist="Бонус-игра" theme="form" style={{ marginTop: 20 }} />
+          <Link to="/game">
+            <Button artist="Сыграть еще раз" theme="landing" />
+          </Link>
+          <Link to="/form">
+            <Button
+              artist="Бонус-игра"
+              theme="form"
+              style={{ marginTop: 20 }}
+            />
+          </Link>
         </div>
       </div>
     );
@@ -52,5 +61,5 @@ export default connect(
   state => ({
     dots: state.progressBar.dots,
   }),
-  { choosePlaylist }
+  { clearProgress }
 )(withRouter(GameOver));

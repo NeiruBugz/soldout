@@ -4,7 +4,8 @@ import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import ChoosePlaylist from '../../components/ChoosePlaylist';
-import { WS_DEFAULT_HOST } from "../../helpers/variables";
+import Footer from "../../components/Footer";
+import { WS_DEFAULT_HOST } from '../../helpers/variables';
 
 import { setTracks } from '../../store/actions/tracks';
 import { setDot } from '../../store/actions/progress';
@@ -117,15 +118,7 @@ class GameField extends React.Component {
             )}
           </div>
         </div>
-        <footer style={{ position: 'fixed', bottom: 40, left: 40 }}>
-          <div className="container">
-            <div className="row">
-              <div className="col-xs">
-                <a href="/form">Дать фидбек</a>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </>
     ) : (
       <ChoosePlaylist />

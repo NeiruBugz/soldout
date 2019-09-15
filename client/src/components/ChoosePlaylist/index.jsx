@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { choosePlaylist, setPlaylists } from '../../store/actions/playlists';
 import Button from '../Button/Button';
 import axios from '../../helpers/axios';
+import Footer from "../Footer";
 
 class ChoosePlaylist extends Component {
   componentDidMount() {
@@ -29,15 +30,7 @@ class ChoosePlaylist extends Component {
             ))}
           </div>
         </div>
-        <footer style={{ position: 'fixed', bottom: 40, left: 40 }}>
-          <div className="container">
-            <div className="row">
-              <div className="col-xs">
-                <a href="/form">Дать фидбек</a>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </>
     );
   }

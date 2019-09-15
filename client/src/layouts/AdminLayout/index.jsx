@@ -51,7 +51,7 @@ class AdminLayout extends React.Component {
               Админка
             </Typography>
             <Button color="inherit">
-              <a href="/">В игру</a>
+              <Link to="/">В игру</Link>
             </Button>
           </Toolbar>
         </AppBar>

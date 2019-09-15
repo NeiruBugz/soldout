@@ -21,9 +21,7 @@ const StartMessage = ({ btnAction }) => (
       </div>
       <div className="row">
         <div className="col-xs-12 col-sm-10 col-lg-6 col-sm-offset-1 col-lg-offset-3 center-xs">
-          <a onClick={btnAction}>
-            <Button artist="Понял, поехали" theme="landing" />
-          </a>
+          <Button artist="Понял, поехали" theme="landing" onClick={btnAction} />
         </div>
       </div>
     </div>
