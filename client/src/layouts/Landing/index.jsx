@@ -3,7 +3,7 @@ import block from 'bem-cn';
 
 import './index.scss';
 import { Link } from 'react-router-dom';
-import Footer from "../../components/Footer";
+import Footer from '../../components/Footer';
 import vinyl from '../../vinyl.svg';
 import Button from '../../components/Button/Button';
 
@@ -24,8 +24,8 @@ const Landing = () => (
             <div className="row">
               <div className="col-xs-9 col-md-8 col-lg-6">
                 <p className={b2()}>
-                  Простая игра, вдохновленная «Афиша. Видео». Теперь поиграть
-                  могут не только рэперы, но и ты
+                  Угадывай песни популярных исполнителей, соревнуйся с друзьями
+                  и делись результатами в инстаграме.
                 </p>
               </div>
             </div>
