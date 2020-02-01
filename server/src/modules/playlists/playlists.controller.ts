@@ -10,14 +10,14 @@ import {
 import { Playlist } from './interfaces/playlist.interface';
 import { PlaylistsService } from './playlists.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
-import { DeniedGuard } from '../../guards/denied.guard';
+import { AdminGuard } from '../../guards/admin-guard.service';
 
 @Controller('playlists')
 export class PlaylistsController {
   constructor(private readonly playlistsService: PlaylistsService) {}
 
   @Post()
-  @UseGuards(DeniedGuard)
+  @UseGuards(AdminGuard)
   async create(@Body() createPlaylistDto: CreatePlaylistDto) {
     return await this.playlistsService.create(createPlaylistDto);
   }
@@ -28,7 +28,7 @@ export class PlaylistsController {
   }
 
   @Delete(':id')
-  @UseGuards(DeniedGuard)
+  @UseGuards(AdminGuard)
   async remove(@Param() playlistId: number) {
     return this.playlistsService.delete(playlistId);
   }
