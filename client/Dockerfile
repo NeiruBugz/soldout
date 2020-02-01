@@ -1,4 +1,4 @@
-FROM node:10.16.3-alpine
+FROM node:13-alpine3.10
 
 # set working directory
 WORKDIR /client
@@ -7,4 +7,4 @@ WORKDIR /client
 COPY . .
 
 RUN yarn
-RUN yarn build
+CMD yarn build
