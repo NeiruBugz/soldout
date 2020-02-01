@@ -1,24 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
-
-import { clearProgress } from '../../store/actions/progress';
-import Button from '../Button/Button';
-
-class GameOver extends Component {
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
+import { clearProgress } from "../../store/actions/progress";
+import Button from "../Button/Button";
+class GameOver extends Component<{}, {}> {
   componentDidMount() {
     const { dots, history } = this.props;
     if (dots.length < 20) {
-      history.push('/');
+      history.push("/");
     }
   }
-
   componentWillUnmount() {
     const { clearProgress } = this.props;
     clearProgress();
   }
-
   render() {
     const { dots } = this.props;
     const title =
@@ -26,12 +22,11 @@ class GameOver extends Component {
         ? dots.length > 10
           ? dots.length > 15
             ? dots.length > 19
-              ? 'Великолепно!'
-              : 'Отлично!'
-            : 'Хорошо!'
-          : 'Неплохо!'
-        : 'Попробуй еще раз!';
-
+              ? "Великолепно!"
+              : "Отлично!"
+            : "Хорошо!"
+          : "Неплохо!"
+        : "Попробуй еще раз!";
     return (
       <div>
         <h2 className="heading center-xs mt50">{title}</h2>
@@ -56,10 +51,9 @@ class GameOver extends Component {
     );
   }
 }
-
 export default connect(
   state => ({
-    dots: state.progressBar.dots,
+    dots: state.progressBar.dots
   }),
   { clearProgress }
 )(withRouter(GameOver));

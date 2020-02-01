@@ -1,15 +1,12 @@
-import React from 'react';
-import block from 'bem-cn';
-
-import './index.scss';
-import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import vinyl from '../../vinyl.svg';
-import Button from '../../components/Button/Button';
-
-const b = block('heading');
-const b2 = block('para');
-
+import React from "react";
+import block from "bem-cn";
+import "./index.scss";
+import { Link } from "react-router-dom";
+import Footer from "../../components/Footer";
+import vinyl from "../../vinyl.svg";
+import Button from "../../components/Button/Button";
+const b = block("heading");
+const b2 = block("para");
 const Landing = () => (
   <>
     <div className="landing">
@@ -46,5 +43,4 @@ const Landing = () => (
     <Footer />
   </>
 );
-
 export default Landing;

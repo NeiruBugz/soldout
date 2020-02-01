@@ -1,49 +1,45 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import axios from '../../helpers/axios';
-
-import Button from '../../components/Button/Button';
-
-import './styles.scss';
-import { choosePlaylist } from '../../store/actions/playlists';
-
-class FeedbackForm extends React.Component {
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import axios from "../../helpers/axios";
+import Button from "../../components/Button/Button";
+import "./styles.scss";
+import { choosePlaylist } from "../../store/actions/playlists";
+type FeedbackFormState = {
+  score: number,
+  playlists: string,
+  bugs: string
+};
+class FeedbackForm extends React.Component<{}, FeedbackFormState> {
   constructor(props) {
     super(props);
     this.state = {
       score: 0,
-      playlists: '',
-      bugs: '',
+      playlists: "",
+      bugs: ""
     };
-
     this.BONUS_PLAYLSIT_ID = 6538306484;
   }
-
   onFormSubmit = e => {
     e.preventDefault();
     const { choosePlaylist, history } = this.props;
     let data = this.state;
-    axios.post('/reviews', { ...data }).then(() => {
+    axios.post("/reviews", { ...data }).then(() => {
       choosePlaylist(this.BONUS_PLAYLSIT_ID);
-      history.push('/game');
+      history.push("/game");
     });
   };
-
   onRangeChange = e => {
     this.setState({
-      score: e.target.value,
+      score: e.target.value
     });
   };
-
   onGenresChange = e => {
     this.setState({ playlists: e.target.value });
   };
-
   onBugsChange = e => {
     this.setState({ bugs: e.target.value });
   };
-
   render() {
     let { score } = this.state;
     return (
@@ -80,7 +76,7 @@ class FeedbackForm extends React.Component {
           </>
           <>
             <label htmlFor="bug-report">
-              Ошибки, баги и предложения. Напиши тут{' '}
+              Ошибки, баги и предложения. Напиши тут{" "}
               <span role="img" aria-label="love-emoji">
                 ❤️
               </span>
@@ -103,8 +99,4 @@ class FeedbackForm extends React.Component {
     );
   }
 }
-
-export default connect(
-  null,
-  { choosePlaylist }
-)(withRouter(FeedbackForm));
+export default connect(null, { choosePlaylist })(withRouter(FeedbackForm));

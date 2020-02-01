@@ -1,46 +1,39 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-
-import { setReviews } from '../../store/actions/admin';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
-import axios from '../../helpers/axios';
-
-import './styles.scss';
-import { Link, Button } from '@material-ui/core';
-
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { setReviews } from "../../store/actions/admin";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import axios from "../../helpers/axios";
+import "./styles.scss";
+import { Link, Button } from "@material-ui/core";
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: '100%',
-    height: '100vh',
-    overflowX: 'auto',
-    marginTop: theme.spacing(2),
+    width: "100%",
+    height: "100vh",
+    overflowX: "auto",
+    marginTop: theme.spacing(2)
   },
   table: {
-    minWidth: 320,
+    minWidth: 320
   },
   title: {
-    flexGrow: 1,
-  },
+    flexGrow: 1
+  }
 });
-
-class AdminLayout extends React.Component {
+class AdminLayout extends React.Component<{}, {}> {
   componentDidMount() {
     const { setReviews } = this.props;
-    axios.get('/reviews').then(({ data }) => setReviews(data));
+    axios.get("/reviews").then(({ data }) => setReviews(data));
   }
-
   render() {
     const { classes, reviews } = this.props;
     return (
@@ -84,10 +77,9 @@ class AdminLayout extends React.Component {
     );
   }
 }
-
 export default connect(
   state => ({
-    reviews: state.admin.reviews,
+    reviews: state.admin.reviews
   }),
   { setReviews }
 )(withStyles(styles)(AdminLayout));

@@ -1,22 +1,20 @@
-import { CHOOSE_PLAYLIST, SET_PLAYLISTS } from '../actions/playlists';
-
+import { CHOOSE_PLAYLIST, SET_PLAYLISTS } from "../actions/playlists";
 const initialState = {
   playlists: [],
-  choosedPlaylist: null,
+  choosedPlaylist: null
 };
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PLAYLISTS: {
       return {
         ...state,
-        playlists: action.playlists,
+        playlists: action.playlists
       };
     }
     case CHOOSE_PLAYLIST: {
       return {
         ...state,
-        choosedPlaylist: action.choosedPlaylist,
+        choosedPlaylist: action.choosedPlaylist
       };
     }
     default:

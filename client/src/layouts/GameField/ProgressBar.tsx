@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import ProgressDot from "../../components/ProgressDot";
 import { choosePlaylist } from "../../store/actions/playlists";
-
 const ProgressBar = ({ dots, history, choosePlaylist }) => {
   const myDots = [...dots.dots];
   if (myDots.length === 20) {
@@ -15,7 +14,6 @@ const ProgressBar = ({ dots, history, choosePlaylist }) => {
   while (myDots.length < 20) {
     myDots.push(null);
   }
-
   return (
     <div className="progress-bar">
       {myDots.map((item, index) => (
@@ -27,11 +25,10 @@ const ProgressBar = ({ dots, history, choosePlaylist }) => {
     </div>
   );
 };
-
 export default withRouter(
   connect(
     state => ({
-      dots: state.progressBar,
+      dots: state.progressBar
     }),
     { choosePlaylist }
   )(ProgressBar)

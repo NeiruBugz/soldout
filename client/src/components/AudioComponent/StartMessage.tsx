@@ -1,9 +1,7 @@
-import block from 'bem-cn';
-import React from 'react';
-import Button from '../Button/Button';
-
-const b2 = block('para');
-
+import block from "bem-cn";
+import React from "react";
+import Button from "../Button/Button";
+const b2 = block("para");
 const StartMessage = ({ btnAction }) => (
   <div className="landing">
     <div className="container">
@@ -21,11 +19,10 @@ const StartMessage = ({ btnAction }) => (
       </div>
       <div className="row">
         <div className="col-xs-12 col-sm-10 col-lg-6 col-sm-offset-1 col-lg-offset-3 center-xs">
-          <Button artist="Понял, поехали" theme="landing" onClick={btnAction} />
+          <Button artist="Понял, поехали" theme="landing" onClick={btnAction}/>
         </div>
       </div>
     </div>
   </div>
 );
-
 export default StartMessage;

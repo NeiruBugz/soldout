@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { choosePlaylist, setPlaylists } from '../../store/actions/playlists';
-import Button from '../Button/Button';
-import axios from '../../helpers/axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { choosePlaylist, setPlaylists } from "../../store/actions/playlists";
+import Button from "../Button/Button";
+import axios from "../../helpers/axios";
 import Footer from "../Footer";
-
-class ChoosePlaylist extends Component {
+class ChoosePlaylist extends Component<{}, {}> {
   componentDidMount() {
     const { setPlaylists } = this.props;
-    axios.get('/playlists').then(({ data }) => setPlaylists(data));
+    axios.get("/playlists").then(({ data }) => setPlaylists(data));
   }
-
   render() {
     const { playlists, choosePlaylist } = this.props;
-
     return (
       <>
         <div>
@@ -35,10 +32,9 @@ class ChoosePlaylist extends Component {
     );
   }
 }
-
 export default connect(
   state => ({
-    playlists: state.playlists.playlists,
+    playlists: state.playlists.playlists
   }),
   { setPlaylists, choosePlaylist }
 )(ChoosePlaylist);

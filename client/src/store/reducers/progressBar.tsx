@@ -1,9 +1,7 @@
 import { SET_DOT, CLEAR_PROGRESS } from "../actions/progress";
-
 const initialState = {
-  dots: [],
+  dots: []
 };
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_DOT: {
@@ -11,12 +9,12 @@ export default (state = initialState, action) => {
       dots.push(action.dot);
       return {
         ...state,
-        dots,
+        dots
       };
     }
     case CLEAR_PROGRESS:
       return {
-        dots: [],
+        dots: []
       };
     default:
       return state;

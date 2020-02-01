@@ -1,17 +1,18 @@
-import { SET_REVIEWS } from '../actions/admin';
-
+import { SET_TRACKS } from "../actions/tracks";
 const initialState = {
-  reviews: [],
+  tracks: {
+    tracks: [],
+    src: null
+  }
 };
-
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_REVIEWS: {
+    case SET_TRACKS:
       return {
         ...state,
-        reviews: action.reviews,
+        tracks: action.tracks,
+        src: action.src
       };
-    }
     default:
       return state;
   }
