@@ -16,8 +16,8 @@ import { AdminGuard } from '../../guards/admin-guard.service';
 export class PlaylistsController {
   constructor(private readonly playlistsService: PlaylistsService) {}
 
-  @Post()
   @UseGuards(AdminGuard)
+  @Post()
   async create(@Body() createPlaylistDto: CreatePlaylistDto) {
     return await this.playlistsService.create(createPlaylistDto);
   }
@@ -27,8 +27,8 @@ export class PlaylistsController {
     return this.playlistsService.findAll();
   }
 
-  @Delete(':id')
   @UseGuards(AdminGuard)
+  @Delete(':id')
   async remove(@Param() playlistId: number) {
     return this.playlistsService.delete(playlistId);
   }
