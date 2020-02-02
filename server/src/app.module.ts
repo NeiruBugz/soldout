@@ -1,11 +1,21 @@
 import { Module } from '@nestjs/common';
-import { ApiModule } from './modules/api/api.module';
-import { WsModule } from './modules/ws/ws.module';
-import { PlaylistsModule } from './modules/playlists/playlists.module';
-import { ReviewsModule } from './modules/reviews/reviews.module';
-import { HealthModule } from './health/health.module';
+import {
+  DeezerApiModule,
+  GameModule,
+  HealthModule,
+  PlaylistsModule,
+  WsModule,
+  MongooseRootAsync,
+} from './modules';
 
 @Module({
-  imports: [ApiModule, WsModule, PlaylistsModule, HealthModule, ReviewsModule],
+  imports: [
+    DeezerApiModule,
+    GameModule,
+    HealthModule,
+    PlaylistsModule,
+    MongooseRootAsync,
+    WsModule,
+  ],
 })
 export class AppModule {}

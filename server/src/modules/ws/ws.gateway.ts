@@ -8,29 +8,33 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { WsService } from './ws.service';
+import { TrackForGameInterface } from '../../interfaces/track.interface';
 
 @WebSocketGateway()
 export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  constructor(private readonly wsService: WsService) {}
+
   @WebSocketServer()
   private server: Server;
 
-  private clients: Record<string, WsService> = {};
-
   @SubscribeMessage('start')
-  public start(client: Socket, data: any): Promise<WsResponse<object>> {
-    return this.clients[client.id].start(data);
+  public async start(
+    client: Socket,
+    { playlistId },
+  ): Promise<WsResponse<{ src: string; tracks: TrackForGameInterface[] }>> {
+    return this.wsService.start(client.id, playlistId);
   }
 
   @SubscribeMessage('choose')
-  public choose(client: Socket, data: any): void {
-    this.clients[client.id].choose(client, data);
+  public choose(client: Socket, data: { trackId: number }): void {
+    return this.wsService.choose(client, data.trackId);
   }
 
-  handleConnection(client: Socket, ...args: any[]) {
-    this.clients[client.id] = new WsService();
+  public handleConnection(client: Socket) {
+    this.wsService.addClient(client.id);
   }
 
   public handleDisconnect(client: Socket) {
-    delete this.clients[client.id];
+    this.wsService.removeClient(client.id);
   }
 }

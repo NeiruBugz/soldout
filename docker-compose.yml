@@ -15,6 +15,9 @@ services:
   server:
     container_name: music10_server
     build: server
+    environment:
+      MONGO_URL: mongodb
+      ADMIN_SECRET: $ADMIN_SECRET
     ports:
       - "4000:3000"
     restart: always

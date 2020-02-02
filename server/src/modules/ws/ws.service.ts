@@ -2,63 +2,48 @@ import { Injectable } from '@nestjs/common';
 import { WsResponse } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 
-import { ApiService } from '../api/api.service';
-import { TrackInterface } from '../tracks/interfaces/track.interface';
+import { DeezerApiService } from '../deezer-api/deezer-api.service';
+import { GameService } from '../game';
+import { TrackForGameInterface } from '../../interfaces/track.interface';
 
 @Injectable()
 export class WsService {
-  private api = new ApiService();
-  private playlistId: number;
-  private rightTrackId: number;
-  private tracks: any;
+  constructor(private readonly deezerApiService: DeezerApiService) {}
 
-  private async getNextTrackPull(): Promise<{
-    src: string;
-    tracks: TrackInterface[];
-  }> {
-    const returnObject = { tracks: [], src: null };
-    if (this.tracks.length < 4) {
-      this.tracks = await this.api.getPlaylistById(this.playlistId);
-    }
-    this.tracks.sort(() => Math.random() - 0.5);
-    const randomTrackIndex = Math.floor(Math.random() * 4);
-    const randomTrack = this.tracks[randomTrackIndex];
-    returnObject.src = randomTrack.src;
-    this.rightTrackId = randomTrack.id;
-    for (let i = 0; i < 4; i++) {
-      const track = this.tracks.shift();
-      const {
-        id,
-        name,
-        artist: { name: artist },
-      } = track;
-      returnObject.tracks.push({ id, name, artist });
-    }
+  private clients: Record<string, GameService> = {};
 
-    return returnObject;
+  public addClient(clientId: string): void {
+    this.clients[clientId] = new GameService();
+  }
+
+  public removeClient(clientId: string): void {
+    delete this.clients[clientId];
   }
 
   public async start(
-    data,
-  ): Promise<
-    WsResponse<{
-      src: string;
-      tracks: TrackInterface[];
-    }>
-  > {
-    this.playlistId = data.playlistId;
-    this.tracks = await this.api.getPlaylistById(this.playlistId);
+    clientId: string,
+    playlistId: number,
+  ): Promise<WsResponse<{ src: string; tracks: TrackForGameInterface[] }>> {
+    const tracks = await this.deezerApiService.getPlaylistById(playlistId);
+    this.clients[clientId].init(tracks);
+    return this.getNextTracks(clientId);
+  }
+
+  public getNextTracks(
+    clientId,
+  ): WsResponse<{ src: string; tracks: TrackForGameInterface[] }> {
     return {
       event: 'tracks',
-      data: await this.getNextTrackPull(),
+      data: this.clients[clientId].getNextTrackPull(),
     };
   }
 
-  public async choose(client: Socket, data): Promise<void> {
-    const { trackId } = data;
-    setTimeout(() => client.emit('tracks', tracks), 1500);
-    client.emit('showCorrect', { choose: trackId, correct: this.rightTrackId });
-    client.emit('guess', this.rightTrackId === trackId);
-    const tracks = await this.getNextTrackPull();
+  public choose(client: Socket, trackId: number): void {
+    const { choose, correct } = this.clients[client.id].choose(trackId);
+    client.emit('showCorrect', { choose, correct });
+    client.emit('guess', choose === correct);
+
+    const newTracks = this.clients[client.id].getNextTrackPull();
+    setTimeout(() => client.emit('tracks', newTracks), 1500);
   }
 }

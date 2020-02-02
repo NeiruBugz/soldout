@@ -7,10 +7,11 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { Playlist } from './interfaces/playlist.interface';
+import { Playlist } from '../../interfaces/playlist.interface';
 import { PlaylistsService } from './playlists.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { AdminGuard } from '../../guards/admin-guard.service';
+import { Types } from 'mongoose';
 
 @Controller('playlists')
 export class PlaylistsController {
@@ -29,7 +30,7 @@ export class PlaylistsController {
 
   @UseGuards(AdminGuard)
   @Delete(':id')
-  async remove(@Param() playlistId: number) {
+  async remove(@Param() playlistId: Types.ObjectId) {
     return this.playlistsService.delete(playlistId);
   }
 }

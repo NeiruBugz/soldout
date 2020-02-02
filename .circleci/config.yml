@@ -1,0 +1,77 @@
+version: 2
+jobs:
+  test_server:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/project
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - server-dependencies-{{ checksum "server/package.json" }}
+            - server-dependencies-
+      - run:
+          name: Install Server Dependencies
+          command: cd server && yarn
+      - save_cache:
+          paths:
+            - server/node_modules
+          key: server-dependencies-{{ checksum "server/package.json" }}
+      - run:
+          name: Run Server Linter
+          command: cd server && yarn lint --format junit -o reports/junit/js-lint-results.xml
+      - run:
+          name: Run Server Unit Tests with Coverage
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
+          command: cd server && yarn test:ci --collectCoverage=true
+      - store_test_results:
+          path: server/reports/junit
+      - store_artifacts:
+          path: server/reports/junit
+      - store_artifacts:
+          path: server/coverage
+      - run:
+          name: Generate Server Documentation
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
+          command: cd server && yarn doc
+      - store_artifacts:
+          path: server/documentation
+
+  deploy_prod:
+    machine:
+      enabled: true
+    steps:
+      - run:
+          name: Deploy To Production Over SSH
+          command: |
+            ssh $DEPLOY_USER@$DEPLOY_HOST "
+            cd soldout &&
+            git fetch --force origin "master:remotes/origin/master" &&
+            git reset --hard "$CIRCLE_SHA1" &&
+            git checkout -q -B master &&
+            echo '
+            MONGO_URL=$MONGO_URL
+            ADMIN_SECRET=$ADMIN_SECRET' > .env
+            docker-compose up -d --build"
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test_server:
+          context: soldout
+      - hold:
+          type: approval
+          requires:
+            - test_server
+          filters:
+            branches:
+              only: master
+      - deploy_prod:
+          context: soldout
+          requires:
+            - hold
+          filters:
+            branches:
+              only: master

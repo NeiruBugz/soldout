@@ -1,12 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { Playlist } from './interfaces/playlist.interface';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import { Playlist } from '../../interfaces/playlist.interface';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 
 @Injectable()
 export class PlaylistsService {
   constructor(
-    @Inject('PLAYLIST_MODEL') private readonly playlistModel: Model<Playlist>,
+    @InjectModel('Playlist') private readonly playlistModel: Model<Playlist>,
   ) {}
 
   async create(createPlaylistDto: CreatePlaylistDto): Promise<Playlist> {
@@ -18,7 +19,7 @@ export class PlaylistsService {
     return this.playlistModel.find().exec();
   }
 
-  async delete(playlistId: number): Promise<Playlist[]> {
-    return this.playlistModel.deleteOne({ id: playlistId });
+  async delete(id: Types.ObjectId): Promise<Playlist> {
+    return this.playlistModel.findOneAndDelete({ _id: id });
   }
 }
