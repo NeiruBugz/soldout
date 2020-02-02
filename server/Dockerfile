@@ -6,5 +6,6 @@ WORKDIR /server
 COPY . .
 
 RUN yarn
+RUN yarn build
 
 EXPOSE 3000

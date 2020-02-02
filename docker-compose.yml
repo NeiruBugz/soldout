@@ -16,14 +16,14 @@ services:
     container_name: music10_server
     build: server
     environment:
-      MONGO_URL: mongodb
+      MONGO_URL: $MONGO_URL
       ADMIN_SECRET: $ADMIN_SECRET
     ports:
       - "4000:3000"
     restart: always
     depends_on:
       - mongodb
-    command: "yarn start:prod"
+    command: "yarn start:forever"
 
   client:
     container_name: music10_client

@@ -1,2 +1,2 @@
-export const WS_DEFAULT_HOST = 'ws://localhost:3000/';
-export const API_DEFAULT_HOST = 'http://localhost:3000/';
+export const WS_DEFAULT_HOST = 'wss://api.music10.ru/';
+export const API_DEFAULT_HOST = 'https://api.music10.ru/';
