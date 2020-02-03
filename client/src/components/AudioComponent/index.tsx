@@ -1,15 +1,15 @@
 /* eslint-disable react/no-string-refs,react/destructuring-assignment */
-import React from "react";
-import {connect} from "react-redux";
-import {withRouter} from "react-router";
-import {setPlaying} from "../../store/actions/game";
-import StartMessage from "./StartMessage";
-import Visualizer from "./Visualizer";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { setPlaying } from '../../store/actions/game';
+import StartMessage from './StartMessage';
+import Visualizer from './Visualizer';
 
 interface AudioComponentProps {
-  musicUrl: string,
-  setPlaying: (flag) => {},
-  isPlaying: boolean,
+  musicUrl: any;
+  setPlaying: (flag) => {};
+  isPlaying: boolean;
 }
 
 class AudioComponent extends React.Component<AudioComponentProps, {}> {
@@ -19,11 +19,11 @@ class AudioComponent extends React.Component<AudioComponentProps, {}> {
   constructor(props) {
     super(props);
 
-    this.audio.crossOrigin = "anonymous";
+    this.audio.crossOrigin = 'anonymous';
   }
 
   componentDidUpdate(prevProps) {
-    const {musicUrl} = this.props;
+    const { musicUrl } = this.props;
     this.stop();
     if (musicUrl) {
       this.audio.src = this.props.musicUrl;
@@ -41,7 +41,7 @@ class AudioComponent extends React.Component<AudioComponentProps, {}> {
     this.audio.pause();
   };
   play = () => {
-    const {setPlaying} = this.props;
+    const { setPlaying } = this.props;
     this.audio.oncanplaythrough = null;
     if (this.audio) {
       this.audio
@@ -55,13 +55,13 @@ class AudioComponent extends React.Component<AudioComponentProps, {}> {
   };
 
   render() {
-    const {isPlaying} = this.props;
-    return isPlaying ? <Visualizer/> : <StartMessage btnAction={this.play}/>;
+    const { isPlaying } = this.props;
+    return isPlaying ? <Visualizer /> : <StartMessage btnAction={this.play} />;
   }
 }
 
 export default withRouter(
-  connect(state => ({isPlaying: state.game.isPlaying}), {setPlaying})(
+  connect(state => ({ isPlaying: state.game.isPlaying }), { setPlaying })(
     AudioComponent
   )
 );

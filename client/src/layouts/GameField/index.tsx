@@ -1,34 +1,45 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-array-index-key */
-import React from "react";
-import io from "socket.io-client";
-import { connect } from "react-redux";
-import ChoosePlaylist from "../../components/ChoosePlaylist";
-import Footer from "../../components/Footer";
-import { WS_DEFAULT_HOST } from "../../helpers/variables";
-import { choosePlaylist } from "../../store/actions/playlists";
-import { setTracks } from "../../store/actions/tracks";
-import { setDot } from "../../store/actions/progress";
-import AudioComponent from "../../components/AudioComponent";
-import Button from "../../components/Button/Button";
-import "./index.scss";
-import ProgressBar from "./ProgressBar";
+import React from 'react';
+import io from 'socket.io-client';
+import { connect } from 'react-redux';
+import ChoosePlaylist from '../../components/ChoosePlaylist';
+import Footer from '../../components/Footer';
+import { WS_DEFAULT_HOST } from '../../helpers/variables';
+import { choosePlaylist } from '../../store/actions/playlists';
+import { setTracks } from '../../store/actions/tracks';
+import { setDot } from '../../store/actions/progress';
+import AudioComponent from '../../components/AudioComponent';
+import Button from '../../components/Button/Button';
+import './index.scss';
+import ProgressBar from './ProgressBar';
 type GameFieldState = {
-  disabled: boolean,
-  choose: null,
-  correct: null
+  disabled: boolean;
+  choose: null;
+  correct: null;
 };
-class GameField extends React.Component<{}, GameFieldState> {
+type GameFieldProps = {
+  choosedPlaylist: any;
+  setTracks: any;
+  setDot: any;
+  choosePlaylist: any;
+  tracks: any;
+  isPlaying: boolean;
+};
+
+// @ts-ignore
+class GameField extends React.Component<GameFieldProps, GameFieldState> {
+  url = process.env.WS_HOST || WS_DEFAULT_HOST;
+  socket = io(this.url, {
+    transports: ['websocket'],
+  });
+
   constructor(props) {
     super(props);
-    const url = process.env.WS_HOST || WS_DEFAULT_HOST;
-    this.socket = io(url, {
-      transports: ["websocket"]
-    });
     this.state = {
       disabled: true,
       choose: null,
-      correct: null
+      correct: null,
     };
   }
   componentDidMount() {
@@ -48,36 +59,39 @@ class GameField extends React.Component<{}, GameFieldState> {
       choosedPlaylist: playlistId,
       setTracks,
       setDot,
-      choosePlaylist
+      choosePlaylist,
     } = this.props;
-    this.socket.emit("start", { playlistId });
-    this.socket.on("tracks", message => {
+    this.socket.emit('start', { playlistId });
+    this.socket.on('tracks', message => {
       setTracks(message);
       this.setState({ disabled: false });
     });
-    this.socket.on("showCorrect", message => {
+    this.socket.on('showCorrect', message => {
       this.setState({
         choose: message.choose,
         correct: message.correct,
-        disabled: true
+        disabled: true,
       });
     });
-    this.socket.on("guess", message => {
+    this.socket.on('guess', message => {
       setDot(message);
     });
-    this.socket.on("disconnect", () => {
+    this.socket.on('disconnect', () => {
       choosePlaylist(null);
     });
   };
   onChoose = trackId => {
-    this.socket.emit("choose", { trackId });
+    this.socket.emit('choose', { trackId });
   };
   render() {
     const {
       tracks: { tracks },
       isPlaying,
-      choosedPlaylist
+      choosedPlaylist,
     } = this.props;
+    const audioProps = {
+      musicUrl: tracks.src,
+    };
     const { disabled, choose, correct } = this.state;
     return choosedPlaylist ? (
       <>
@@ -85,7 +99,7 @@ class GameField extends React.Component<{}, GameFieldState> {
           <div className="container">
             <div className="row center-xs">
               <div className="col-xs">
-                <AudioComponent musicUrl={tracks.src} />
+                <AudioComponent {...audioProps} />
               </div>
             </div>
             {isPlaying && (
@@ -100,9 +114,9 @@ class GameField extends React.Component<{}, GameFieldState> {
                       skin="bright"
                       status={
                         item.id === correct
-                          ? "correct"
+                          ? 'correct'
                           : correct && item.id === choose
-                          ? "error"
+                          ? 'error'
                           : null
                       }
                       onClick={() => !disabled && this.onChoose(item.id)}
@@ -125,7 +139,7 @@ export default connect(
   state => ({
     tracks: state.tracks,
     isPlaying: state.game.isPlaying,
-    choosedPlaylist: state.playlists.choosedPlaylist
+    choosedPlaylist: state.playlists.choosedPlaylist,
   }),
   { setTracks, setDot, choosePlaylist }
 )(GameField);
