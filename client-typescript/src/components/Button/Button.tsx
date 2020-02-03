@@ -1,7 +1,17 @@
-import React from 'react';
+import React from "react";
 
 type ButtonProps = {
-    artist?: string,
-    type?: string,
-    track?: string,
+  label: string | number;
+  subLabel?: string | number;
+  className: string;
+  onClick?: () => {};
+};
+
+export const Button: React.FC<ButtonProps> = ({ label, subLabel, className, onClick }) => {
+  return (
+    <button onClick={onClick}>
+      <label>{label}</label>
+      {subLabel && <label>{subLabel}</label>}
+    </button>
+  );
 };
