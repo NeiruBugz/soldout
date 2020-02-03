@@ -4,7 +4,7 @@ type ButtonProps = {
   label: string | number;
   subLabel?: string | number;
   className: string;
-  onClick?: () => {};
+  onClick?: any;
 };
 
 export const Button: React.FC<ButtonProps> = ({ label, subLabel, className, onClick }) => {

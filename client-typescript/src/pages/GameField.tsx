@@ -11,6 +11,13 @@ import { setDot } from "../store/progress/actions";
 
 import { Button } from "../components/Button/Button";
 import { WS_DEFAULT_HOST } from "../utils/variables";
+import ChoosePlaylist from "../components/ChoosePlaylist/ChoosePlaylist";
+
+type Track = {
+  id: string | number;
+  artist: string;
+  name: string;
+};
 
 const mapStateToProps = (state: RootState) => ({
   tracks: state.tracks,
@@ -27,7 +34,7 @@ type GameFieldProps = {
   choosePlaylist: any;
 };
 
-type Props = typeof mapDispatchToProps & typeof mapStateToProps & GameFieldProps;
+type Props = ReturnType<typeof mapStateToProps> & GameFieldProps;
 
 type State = {
   disabled: boolean;
@@ -94,21 +101,20 @@ class GameField extends Component<Props, State> {
     } = this.props;
     const { disabled, choose, correct } = this.state;
     return chosenPlaylist ? (
-      <Fragment>
+      <>
         <div className='field'>
           <div className='container'>
             {isPlaying && (
               <>
                 <div className='button__grid'>
-                  {tracks.tracks.map((item: any) => (
+                  {tracks.tracks.map((item: Track) => (
                     <Button
+                      className={""}
                       key={item.id}
-                      id={`track_${item.id}`}
-                      artist={item.artist}
-                      track={item.name}
-                      skin='bright'
-                      status={item.id === correct ? "correct" : correct && item.id === choose ? "error" : null}
-                      onClick={() => !disabled && this.onChoose(item.id)}
+                      label={item.artist}
+                      onClick={() => {
+                        !disabled && this.onChoose(item.id);
+                      }}
                     />
                   ))}
                 </div>
@@ -116,9 +122,9 @@ class GameField extends Component<Props, State> {
             )}
           </div>
         </div>
-      </Fragment>
+      </>
     ) : (
-      <Fragment />
+      <ChoosePlaylist />
     );
   }
 }
