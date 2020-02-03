@@ -105,7 +105,7 @@ class GameField extends React.Component<GameFieldProps, GameFieldState> {
             {isPlaying && (
               <>
                 <div className="button__grid">
-                  {tracks.tracks.map(item => (
+                  {tracks.tracks.map((item: any) => (
                     <Button
                       key={item.id}
                       id={`track_${item.id}`}
