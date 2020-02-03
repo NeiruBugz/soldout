@@ -17,7 +17,7 @@ class ChoosePlaylist extends Component {
     return (
       <>
         <div>
-          <h2 className="heading center-xs">Выберите жанр</h2>
+          <h2 className="heading center-xs">Выберите исполнителя</h2>
           <div className="button__grid">
             {playlists.map(item => (
               <Button
