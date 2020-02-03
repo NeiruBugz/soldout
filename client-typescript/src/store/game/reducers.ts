@@ -8,10 +8,9 @@ type gameState = {
 const initialState: gameState = { isPlaying: false };
 
 export function gameReducer(state = initialState, action: gameAction): gameState {
-  switch (action.type) {
-    case SET_PLAYING:
-      return { isPlaying: action.payload };
-    default:
-      return state;
+  if (action.type === SET_PLAYING) {
+    return { isPlaying: action.payload };
+  } else {
+    return state;
   }
 }
