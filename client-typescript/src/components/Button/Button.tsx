@@ -3,7 +3,7 @@ import React from "react";
 type ButtonProps = {
   label: string | number;
   subLabel?: string | number;
-  className: string;
+  className: string | null;
   onClick?: any;
 };
 

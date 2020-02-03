@@ -14,13 +14,12 @@ type Playlist = {
 
 type Props = {
   setPlaylists?: any;
-  playlists?: [];
   choosePlaylist?: any;
 };
 
-const mapStateToProps = (state: RootState) => {
-  playlists: state.playlist.playlists;
-};
+const mapStateToProps = (state: RootState) => ({
+  playlists: state.playlist.playlists,
+});
 
 type ChoosePlaylistProps = ReturnType<typeof mapStateToProps> & Props;
 

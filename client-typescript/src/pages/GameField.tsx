@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import io from "socket.io-client";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 
 import { RootState } from "../store/Store";
 
@@ -12,6 +11,7 @@ import { setDot } from "../store/progress/actions";
 import { Button } from "../components/Button/Button";
 import { WS_DEFAULT_HOST } from "../utils/variables";
 import ChoosePlaylist from "../components/ChoosePlaylist/ChoosePlaylist";
+import AudioComponent from "../components/AudioComponent";
 
 type Track = {
   id: string | number;
@@ -99,30 +99,32 @@ class GameField extends Component<Props, State> {
       isPlaying,
       chosenPlaylist,
     } = this.props;
+
     const { disabled, choose, correct } = this.state;
     return chosenPlaylist ? (
-      <>
-        <div className='field'>
-          <div className='container'>
-            {isPlaying && (
-              <>
-                <div className='button__grid'>
-                  {tracks.tracks.map((item: Track) => (
-                    <Button
-                      className={""}
-                      key={item.id}
-                      label={item.artist}
-                      onClick={() => {
-                        !disabled && this.onChoose(item.id);
-                      }}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
+      <div className='field' style={{ height: "100vh" }}>
+        <div className='container' style={{ height: "100%" }}>
+          <div className='col-xs'>
+            <AudioComponent musicUrl={tracks.src} />
           </div>
+          {isPlaying && (
+            <>
+              <div className='button__grid' style={{ height: "100%" }}>
+                {tracks.tracks.map((item: Track) => (
+                  <Button
+                    className={item.id === correct ? "correct" : correct && item.id === choose ? "error" : null}
+                    key={item.id}
+                    label={item.artist}
+                    onClick={() => {
+                      !disabled && this.onChoose(item.id);
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
-      </>
+      </div>
     ) : (
       <ChoosePlaylist />
     );
