@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -15,7 +15,7 @@ type Props = {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  isPlaying: state.game.isPlaying,
+  isPlaying: state.game.isPlaying
 });
 
 const mapDispatchToProps = { setPlaying };
@@ -24,6 +24,7 @@ type ComponentProps = ReturnType<typeof mapStateToProps> & Props;
 
 class AudioComponent extends Component<ComponentProps, {}> {
   timer: any;
+
   audio = new Audio();
 
   constructor(props: ComponentProps) {
@@ -31,7 +32,7 @@ class AudioComponent extends Component<ComponentProps, {}> {
     this.audio.crossOrigin = "anonymous";
   }
 
-  componentDidUpdate(prevProps: Props, prevState: any, prevSnapshot: any) {
+  componentDidUpdate() {
     const { musicUrl } = this.props;
     this.stop();
     if (musicUrl) {
@@ -52,9 +53,9 @@ class AudioComponent extends Component<ComponentProps, {}> {
 
   play = () => {
     const { setPlaying } = this.props;
-    setPlaying(true);
     this.audio.oncanplaythrough = null;
     if (this.audio) {
+      debugger;
       this.audio
         .play()
         .then(() => {
@@ -71,4 +72,9 @@ class AudioComponent extends Component<ComponentProps, {}> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AudioComponent);
+const ConnectedAudio = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AudioComponent);
+// @ts-ignore
+export default withRouter(ConnectedAudio);

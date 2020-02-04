@@ -11,7 +11,7 @@ import { setDot } from "../store/progress/actions";
 import { Button } from "../components/Button/Button";
 import { WS_DEFAULT_HOST } from "../utils/variables";
 import ChoosePlaylist from "../components/ChoosePlaylist/ChoosePlaylist";
-import AudioComponent from "../components/AudioComponent";
+import ConnectedAudio from "../components/AudioComponent";
 
 type Track = {
   id: string | number;
@@ -22,7 +22,7 @@ type Track = {
 const mapStateToProps = (state: RootState) => ({
   tracks: state.tracks,
   isPlaying: state.game.isPlaying,
-  chosenPlaylist: state.playlist.chosenPlaylist,
+  chosenPlaylist: state.playlist.chosenPlaylist
 });
 
 const mapDispatchToProps = { setTracks, setDot, choosePlaylist };
@@ -45,7 +45,7 @@ type State = {
 class GameField extends Component<Props, State> {
   url = process.env.WS_HOST || WS_DEFAULT_HOST;
   socket = io(this.url, {
-    transports: ["websocket"],
+    transports: ["websocket"]
   });
 
   constructor(props: Props) {
@@ -53,17 +53,24 @@ class GameField extends Component<Props, State> {
     this.state = {
       disabled: true,
       choose: null,
-      correct: null,
+      correct: null
     };
   }
 
   componentDidMount() {
     const { chosenPlaylist } = this.props;
-    chosenPlaylist && this.putPlaylist();
+    if (chosenPlaylist) {
+      this.putPlaylist();
+    }
   }
 
   putPlaylist = () => {
-    const { chosenPlaylist: playlistId, setTracks, setDot, choosePlaylist } = this.props;
+    const {
+      chosenPlaylist: playlistId,
+      setTracks,
+      setDot,
+      choosePlaylist
+    } = this.props;
 
     this.socket.emit("start", { playlistId });
 
@@ -76,7 +83,7 @@ class GameField extends Component<Props, State> {
       this.setState({
         choose: message.choose,
         correct: message.correct,
-        disabled: true,
+        disabled: true
       });
     });
 
@@ -97,22 +104,28 @@ class GameField extends Component<Props, State> {
     const {
       tracks: { tracks },
       isPlaying,
-      chosenPlaylist,
+      chosenPlaylist
     } = this.props;
 
     const { disabled, choose, correct } = this.state;
     return chosenPlaylist ? (
-      <div className='field' style={{ height: "100vh" }}>
-        <div className='container' style={{ height: "100%" }}>
-          <div className='col-xs'>
-            <AudioComponent musicUrl={tracks.src} />
+      <div className="field" style={{ height: "100vh" }}>
+        <div className="container" style={{ height: "100%" }}>
+          <div className="col-xs">
+            <ConnectedAudio musicUrl={tracks.src} />
           </div>
           {isPlaying && (
             <>
-              <div className='button__grid' style={{ height: "100%" }}>
+              <div className="button__grid" style={{ height: "100%" }}>
                 {tracks.tracks.map((item: Track) => (
                   <Button
-                    className={item.id === correct ? "correct" : correct && item.id === choose ? "error" : null}
+                    className={
+                      item.id === correct
+                        ? "correct"
+                        : correct && item.id === choose
+                        ? "error"
+                        : null
+                    }
                     key={item.id}
                     label={item.artist}
                     onClick={() => {
