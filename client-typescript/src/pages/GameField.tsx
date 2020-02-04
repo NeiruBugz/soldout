@@ -119,12 +119,12 @@ class GameField extends Component<Props, State> {
               <div className="button__grid" style={{ height: "100%" }}>
                 {tracks.tracks.map((item: Track) => (
                   <Button
-                    className={
+                    classes={
                       item.id === correct
                         ? "correct"
                         : correct && item.id === choose
                         ? "error"
-                        : null
+                        : ""
                     }
                     key={item.id}
                     label={item.artist}

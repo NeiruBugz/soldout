@@ -11,7 +11,7 @@ import StartMessage from "./StartMessage";
 type Props = {
   musicUrl: string | null;
   setPlaying?: any;
-  isPlaying?: any;
+  isPlaying?: boolean;
 };
 
 const mapStateToProps = (state: RootState) => ({
@@ -34,7 +34,9 @@ class AudioComponent extends Component<ComponentProps, {}> {
 
   componentDidUpdate() {
     const { musicUrl } = this.props;
+
     this.stop();
+
     if (musicUrl) {
       this.audio.src = musicUrl;
       this.audio.oncanplaythrough = this.play;

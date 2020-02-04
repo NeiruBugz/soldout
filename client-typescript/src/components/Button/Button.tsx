@@ -3,13 +3,18 @@ import React from "react";
 type ButtonProps = {
   label: string | number;
   subLabel?: string | number;
-  className: string | null;
+  classes: string;
   onClick?: any;
 };
 
-export const Button: React.FC<ButtonProps> = ({ label, subLabel, className, onClick }) => {
+export const Button: React.FC<ButtonProps> = ({
+  label,
+  subLabel,
+  classes = "",
+  onClick
+}) => {
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} className={classes}>
       <label>{label}</label>
       {subLabel && <label>{subLabel}</label>}
     </button>

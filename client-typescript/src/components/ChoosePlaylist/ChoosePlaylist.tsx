@@ -7,6 +7,8 @@ import axios from "../../utils/axios";
 import { Button } from "../Button/Button";
 import { RootState } from "../../store/Store";
 
+import styles from "../Button/styles/Button.module.sass";
+
 type Playlist = {
   playlistId: string | number;
   name: string;
@@ -18,7 +20,7 @@ type Props = {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  playlists: state.playlist.playlists,
+  playlists: state.playlist.playlists
 });
 
 type ChoosePlaylistProps = ReturnType<typeof mapStateToProps> & Props;
@@ -36,11 +38,11 @@ class ChoosePlaylist extends Component<ChoosePlaylistProps, {}> {
     return (
       <>
         <div>
-          <h2 className='heading center-xs'>Выберите исполнителя</h2>
-          <div className='button__grid'>
+          <h2 className="heading center-xs">Выберите исполнителя</h2>
+          <div className="button__grid">
             {playlists.map((item: Playlist) => (
               <Button
-                className={""}
+                classes={styles.landingButton}
                 key={item.playlistId}
                 label={item.name}
                 onClick={() => choosePlaylist(item.playlistId)}
