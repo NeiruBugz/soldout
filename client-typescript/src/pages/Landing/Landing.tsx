@@ -13,12 +13,12 @@ export const Landing: React.FC = () => (
         <div className={landing.content}>
           <div className="row">
             <div className="col-xs-9 col-md-8 col-lg-6">
-              <h1>Узнать за 10 секунд</h1>
+              <h1 className={landing.heading}>Узнать за 10 секунд</h1>
             </div>
           </div>
           <div className="row">
             <div className="col-xs-9 col-md-8 col-lg-6">
-              <p>
+              <p className={landing.para}>
                 Угадывай песни популярных исполнителей, соревнуйся с друзьями и
                 делись результатами в инстаграме.
               </p>

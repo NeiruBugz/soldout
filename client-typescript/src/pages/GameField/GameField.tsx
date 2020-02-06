@@ -4,6 +4,8 @@ import { AudioComponent } from './components/AudioComponent';
 import { GameContext, TracksContext } from '../../contexts';
 import { Button } from '../../components';
 
+import fieldStyles from './GameField.module.sass';
+
 export const GameField: React.FC = () => {
   const {
     playlistId,
@@ -31,10 +33,10 @@ export const GameField: React.FC = () => {
     // TODO: иналайновые стили не очень хорошая тема. Нужно стилизовать либо через CSS-modules, либо CSS-IN-JS
     <div className="field" style={{ height: '100vh' }}>
       <div className="container" style={{ height: '100%' }}>
-        <div className="col-xs">
+        <div className="col-xs center-xs">
           <AudioComponent musicUrl={audioSrc} />
         </div>
-        <div className="button__grid" style={{ height: '100%' }}>
+        <div className={fieldStyles.button__grid}>
           {tracks.map(track => (
             <Button
               key={track.id}
@@ -44,9 +46,9 @@ export const GameField: React.FC = () => {
               // TODO: Можно подключить библиотечку типа classnames
               className={
                 track.id === correctTrack
-                  ? 'correct'
+                  ? fieldStyles.correct
                   : correctTrack && track.id === selectedTrack
-                  ? 'error'
+                  ? fieldStyles.error
                   : ''
               }
             />

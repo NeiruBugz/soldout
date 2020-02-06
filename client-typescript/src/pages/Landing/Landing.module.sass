@@ -8,28 +8,20 @@
 .wrapper
   display: flex
 
-.vinyl
-  z-index: -1
-  position: absolute
-  right: 20px
-  @media (max-width: 1024px)
-    right: -180px
-
-  @media (max-width: 425px)
-    right: -100px
-
-.vinyl__image
-  animation: App-logo-spin infinite 20s linear
-  height: 28rem
-  @media (max-width: 425px)
-    height: 16rem
+.heading
+  font-family: 'Rubik', sans-serif
+  font-weight: 900
+  font-size: 3rem
+  color: #fdfdfd
 
   @media (max-width: 1024px)
-    height: 20rem
+    font-size: 1.5rem
 
-@keyframes App-logo-spin
-  from
-    transform: rotate(0deg)
+.para
+  font-family: 'Montserrat', sans-serif
+  font-size: 1.25rem
+  color: #fdfdfd
+  text-align: left
 
-  to
-    transform: rotate(360deg)
+  @media (max-width: 1024px)
+    font-size: 1rem
