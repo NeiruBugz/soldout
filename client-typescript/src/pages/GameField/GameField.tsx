@@ -5,6 +5,7 @@ import { GameContext, TracksContext } from '../../contexts';
 import { Button } from '../../components';
 
 import fieldStyles from './GameField.module.sass';
+import { Link } from 'react-router-dom';
 
 export const GameField: React.FC = () => {
   const {
@@ -32,8 +33,6 @@ export const GameField: React.FC = () => {
     [],
   );
 
-  console.log(dots);
-
   return playlistId ? (
     // TODO: иналайновые стили не очень хорошая тема. Нужно стилизовать либо через CSS-modules, либо CSS-IN-JS
     <div className="field" style={{ height: '100vh' }}>
@@ -41,7 +40,7 @@ export const GameField: React.FC = () => {
         <div className="col-xs center-xs">
           <AudioComponent musicUrl={audioSrc} />
         </div>
-        {dots.length < 21 ? (
+        {dots.length < 20 ? (
           <div className={fieldStyles.button__grid}>
             {tracks.map(track => (
               <Button
@@ -59,19 +58,21 @@ export const GameField: React.FC = () => {
                 }
               />
             ))}
-            {/* TODO: component with dots*/}
+            {dots.length > 0 && (
+              <div className="center-xs">
+                <span className={fieldStyles.progress}>
+                  {dots.filter(Boolean).length} / 20{' '}
+                </span>
+              </div>
+            )}
           </div>
         ) : (
-          <div className="center-xs">
+          <div className="center-xs game-over">
             <h2>Игра окончена!</h2>
             <p>Ваш результат: {dots.filter(Boolean).length} из 20</p>
-          </div>
-        )}
-        {dots.length > 0 && (
-          <div className="center-xs">
-            <span className={fieldStyles.progress}>
-              {dots.filter(Boolean).length} / 20{' '}
-            </span>
+            <Link to="/">
+              <Button label="Сыграть еще" className={fieldStyles.button} />
+            </Link>
           </div>
         )}
       </div>
