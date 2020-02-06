@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, Fragment } from 'react';
 import { ChoosePlaylist } from './components/ChoosePlaylist';
 import { AudioComponent } from './components/AudioComponent';
+import { ProgressDot } from './components/ProgressDot';
 import { GameContext, TracksContext } from '../../contexts';
 import { Button } from '../../components';
 
@@ -25,9 +26,12 @@ export const GameField: React.FC = () => {
   }, [audioSrc]);
 
   // unload
-  useEffect(() => () => {
-    setPlaylistId(undefined);
-  }, []);
+  useEffect(
+    () => () => {
+      setPlaylistId(undefined);
+    },
+    [],
+  );
 
   return playlistId ? (
     // TODO: иналайновые стили не очень хорошая тема. Нужно стилизовать либо через CSS-modules, либо CSS-IN-JS
@@ -36,30 +40,39 @@ export const GameField: React.FC = () => {
         <div className="col-xs center-xs">
           <AudioComponent musicUrl={audioSrc} />
         </div>
-        <div className={fieldStyles.button__grid}>
-          {tracks.map(track => (
-            <Button
-              key={track.id}
-              label={track.name}
-              subLabel={track.artist}
-              onClick={() => setSelectedTrack(track.id)}
-              // TODO: Можно подключить библиотечку типа classnames
-              className={
-                track.id === correctTrack
-                  ? fieldStyles.correct
-                  : correctTrack && track.id === selectedTrack
-                  ? fieldStyles.error
-                  : ''
-              }
-            />
-          ))}
-          {/* TODO: component with dots*/}
-          <div>
-            {dots.map(dot => (
-              <span>{dot ? '+' : '-'}</span>
+        {dots.filter(Boolean).length < 21 ? (
+          <div className={fieldStyles.button__grid}>
+            {tracks.map(track => (
+              <Button
+                key={track.id}
+                label={track.name}
+                subLabel={track.artist}
+                onClick={() => setSelectedTrack(track.id)}
+                // TODO: Можно подключить библиотечку типа classnames
+                className={
+                  track.id === correctTrack
+                    ? fieldStyles.correct
+                    : correctTrack && track.id === selectedTrack
+                    ? fieldStyles.error
+                    : ''
+                }
+              />
             ))}
+            {/* TODO: component with dots*/}
           </div>
-        </div>
+        ) : (
+          <Fragment>
+            <h2>Игра окончена!</h2>
+            <p>Ваш результат: {dots.length} из 20</p>
+          </Fragment>
+        )}
+        {dots.length > 0 && (
+          <div className="center-xs">
+            <span className={fieldStyles.progress}>
+              {dots.filter(Boolean).length} / 20{' '}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   ) : (
