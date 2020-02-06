@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, Fragment } from 'react';
 import { ChoosePlaylist } from './components/ChoosePlaylist';
 import { AudioComponent } from './components/AudioComponent';
-import { ProgressDot } from './components/ProgressDot';
 import { GameContext, TracksContext } from '../../contexts';
 import { Button } from '../../components';
 
@@ -33,6 +32,8 @@ export const GameField: React.FC = () => {
     [],
   );
 
+  console.log(dots);
+
   return playlistId ? (
     // TODO: иналайновые стили не очень хорошая тема. Нужно стилизовать либо через CSS-modules, либо CSS-IN-JS
     <div className="field" style={{ height: '100vh' }}>
@@ -40,7 +41,7 @@ export const GameField: React.FC = () => {
         <div className="col-xs center-xs">
           <AudioComponent musicUrl={audioSrc} />
         </div>
-        {dots.filter(Boolean).length < 21 ? (
+        {dots.length < 21 ? (
           <div className={fieldStyles.button__grid}>
             {tracks.map(track => (
               <Button
@@ -61,10 +62,10 @@ export const GameField: React.FC = () => {
             {/* TODO: component with dots*/}
           </div>
         ) : (
-          <Fragment>
+          <div className="center-xs">
             <h2>Игра окончена!</h2>
-            <p>Ваш результат: {dots.length} из 20</p>
-          </Fragment>
+            <p>Ваш результат: {dots.filter(Boolean).length} из 20</p>
+          </div>
         )}
         {dots.length > 0 && (
           <div className="center-xs">
