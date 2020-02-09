@@ -41,7 +41,9 @@ describe('WsGateway', () => {
 
   it('should choose', async () => {
     gateway.handleConnection(MOCK_CLIENT);
-    const wsServiceChooseSpy = jest.spyOn(service, 'choose').mockImplementation();
+    const wsServiceChooseSpy = jest
+      .spyOn(service, 'choose')
+      .mockImplementation();
     gateway.choose(MOCK_CLIENT, { trackId: 1337 });
 
     expect(wsServiceChooseSpy).toHaveBeenCalledTimes(1);

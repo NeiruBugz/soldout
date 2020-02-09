@@ -59,8 +59,7 @@ workflows:
   version: 2
   test-and-deploy:
     jobs:
-      - test_server:
-          context: soldout
+      - test_server
       - hold:
           type: approval
           requires:
@@ -69,7 +68,6 @@ workflows:
             branches:
               only: master
       - deploy_prod:
-          context: soldout
           requires:
             - hold
           filters:
